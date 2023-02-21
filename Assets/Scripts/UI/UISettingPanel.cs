@@ -27,6 +27,7 @@ public class UISettingPanel : MonoBehaviour
     public void ClosePanel()
     {
         //SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Click);  // 播放点击按钮音效
+        this.gameObject.SetActive(false);
         PlayerPrefs.Save();          // 保存音量设置
     }
 
