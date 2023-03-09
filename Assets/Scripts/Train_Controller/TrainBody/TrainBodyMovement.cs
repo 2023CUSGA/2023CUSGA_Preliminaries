@@ -93,10 +93,11 @@ public class TrainBodyMovement : TrainBody
                 this.moveDir = tempDir;
                 ChangeRotation(moveDir);  //改变图片朝向
                 this.transform.position = tempPosition;
+                this.SetRoute(new Route(this.transform.position, this.moveDir));  //设置转向时的信息
                 routeList.RemoveAt(0);
                 if (Vector2.Distance(preNode.transform.position, transform.position) != this.distace)  //转向后修正
                     transform.position = preNode.transform.position - new Vector3(this.moveDir.x, this.moveDir.y, 0) * this.distace;
-                this.SetRoute(new Route(this.transform.position, this.moveDir));  //设置转向时的信息
+                
             }
         }
         /*
@@ -144,15 +145,5 @@ public class TrainBodyMovement : TrainBody
     public Route GetRoute()  //route Get方法
     {
         return this.route;
-    }
-
-    public Vector2 GetPosition()
-    {
-        return transform.position;
-    }
-
-    public Vector2 GetDir()
-    {
-        return moveDir;
     }
 }
