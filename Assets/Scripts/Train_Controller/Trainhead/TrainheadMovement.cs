@@ -1,24 +1,24 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TrainheadMovement : MonoBehaviour
 {
-    [Header("»ğ³µ×î´óÔË¶¯ËÙ¶È")]
-    [SerializeField] private float moveSpeed = 5.0f;  //ÒÆ¶¯ËÙ¶È
-    [Header("»ğ³µ¼ÓËÙ¶È")]
-    [SerializeField] private float accelerateedSpeed = 1.0f;  //¼ÓËÙ¶È 
-    [Header("»ğ³µ¸ÕÌå")]
-    [SerializeField] private Rigidbody2D trainhead_RB;  //»ğ³µ¸ÕÌå
+    [Header("ç«è½¦æœ€å¤§è¿åŠ¨é€Ÿåº¦")]
+    [SerializeField] private float moveSpeed = 5.0f;  //ç§»åŠ¨é€Ÿåº¦
+    [Header("ç«è½¦åŠ é€Ÿåº¦")]
+    [SerializeField] private float accelerateedSpeed = 1.0f;  //åŠ é€Ÿåº¦ 
+    [Header("ç«è½¦åˆšä½“")]
+    [SerializeField] private Rigidbody2D trainhead_RB;  //ç«è½¦åˆšä½“
 
-    protected Vector2 moveDir = new Vector2(0, 1);  //»ğ³µÔËĞĞ·½Ïò
-    private bool isMoving = false;  //ÊÇ·ñÔÚÔË¶¯ÖĞ
-    private float trainSpeed = 0;  //»ğ³µµ±Ç°µÄËÙ¶È
-    private int train_rotation = 0;  //»ğ³µµÄ³¯Ïò
-    private Route route;  //×ªÏòĞÅÏ¢
+    protected Vector2 moveDir = new Vector2(0, 1);  //ç«è½¦è¿è¡Œæ–¹å‘
+    private bool isMoving = false;  //æ˜¯å¦åœ¨è¿åŠ¨ä¸­
+    private float trainSpeed = 0;  //ç«è½¦å½“å‰çš„é€Ÿåº¦
+    private int train_rotation = 0;  //ç«è½¦çš„æœå‘
+    private Route route;  //è½¬å‘ä¿¡æ¯
 
-    public event Action onRouteSetted;  //·¢ËÍÂ·¾¶ĞÅÏ¢Ê±µÄÊÂ¼ş
+    public event Action onRouteSetted;  //å‘é€è·¯å¾„ä¿¡æ¯æ—¶çš„äº‹ä»¶
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +38,7 @@ public class TrainheadMovement : MonoBehaviour
         StartAndStop();
     }
 
-    private void StartAndStop()  //Æô¶¯ºÍÍ£³µº¯Êı
+    private void StartAndStop()  //å¯åŠ¨å’Œåœè½¦å‡½æ•°
     {
         if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -49,84 +49,84 @@ public class TrainheadMovement : MonoBehaviour
         }
     }
 
-    private void MovingFunc()  //»ğ³µÒÆ¶¯º¯Êı
+    private void MovingFunc()  //ç«è½¦ç§»åŠ¨å‡½æ•°
     {
-        if (isMoving)  //Èç¹û´¦ÓÚÆô¶¯×´Ì¬
+        if (isMoving)  //å¦‚æœå¤„äºå¯åŠ¨çŠ¶æ€
         {
-            //¼ÓËÙÆô¶¯²¿·Ö
+            //åŠ é€Ÿå¯åŠ¨éƒ¨åˆ†
             if (trainSpeed != moveSpeed)
             {
-                if (trainSpeed < moveSpeed)  //ËÙ¶È²»¹»£¬¼ÓËÙ¶È
+                if (trainSpeed < moveSpeed)  //é€Ÿåº¦ä¸å¤Ÿï¼ŒåŠ é€Ÿåº¦
                     trainSpeed += accelerateedSpeed * Time.fixedDeltaTime;
-                else  //ËÙ¶Èµ½´ï»ò³¬¹ı×î´óËÙ¶È£¬½«ËÙ¶È¸³ÖµÎª×î´óËÙ¶È
+                else  //é€Ÿåº¦åˆ°è¾¾æˆ–è¶…è¿‡æœ€å¤§é€Ÿåº¦ï¼Œå°†é€Ÿåº¦èµ‹å€¼ä¸ºæœ€å¤§é€Ÿåº¦
                     trainSpeed = moveSpeed;
                 trainhead_RB.velocity = moveDir * trainSpeed;
             }
         }
         else
         {
-            //¼õËÙÖÆ¶¯²¿·Ö
+            //å‡é€Ÿåˆ¶åŠ¨éƒ¨åˆ†
             if (trainSpeed != 0)
             {
-                if (trainSpeed > 0)  //»¹ÓĞËÙ¶È£¬¼õËÙ
+                if (trainSpeed > 0)  //è¿˜æœ‰é€Ÿåº¦ï¼Œå‡é€Ÿ
                     trainSpeed -= accelerateedSpeed * Time.fixedDeltaTime;
                 else
-                    trainSpeed = 0;  //ËÙ¶ÈĞ¡ÓÚµÈÓÚ0£¬½«ËÙ¶È¸³ÖµÎª0
+                    trainSpeed = 0;  //é€Ÿåº¦å°äºç­‰äº0ï¼Œå°†é€Ÿåº¦èµ‹å€¼ä¸º0
                 trainhead_RB.velocity = moveDir * trainSpeed;
             }
         }
     }
 
-    void DirFunc()  //×ªÏòº¯Êı
+    void DirFunc()  //è½¬å‘å‡½æ•°
     {
-        transform.rotation = Quaternion.Euler(0, 0, train_rotation);  //µ÷ÕûÍ¼ĞÎ½Ç¶È
-        if (Input.GetKey(KeyCode.W) && moveDir.y != (-1))  //Èç¹û°´ÏÂ¡°w¡±¼üÇÒ»ğ³µ·½Ïò²»ÊÇÏòÏÂ
+        transform.rotation = Quaternion.Euler(0, 0, train_rotation);  //è°ƒæ•´å›¾å½¢è§’åº¦
+        if (Input.GetKey(KeyCode.W) && moveDir.y != (-1))  //å¦‚æœæŒ‰ä¸‹â€œwâ€é”®ä¸”ç«è½¦æ–¹å‘ä¸æ˜¯å‘ä¸‹
         {
-            moveDir = new Vector2(0, 1);  //ÏòÉÏ
-            train_rotation = 0;  //×ªÏò
+            moveDir = new Vector2(0, 1);  //å‘ä¸Š
+            train_rotation = 0;  //è½¬å‘
             trainhead_RB.velocity = trainSpeed * moveDir;
-            this.SetRoute(new Route(transform.position, moveDir));  //ÉèÖÃ×ªÏòÊ±µÄĞÅÏ¢
+            this.SetRoute(new Route(transform.position, moveDir));  //è®¾ç½®è½¬å‘æ—¶çš„ä¿¡æ¯
         }
         if (Input.GetKey(KeyCode.A) && moveDir.x != 1)
         {
-            moveDir = new Vector2(-1, 0);  //Ïò×ó
-            train_rotation = 90;  //×ªÏò
+            moveDir = new Vector2(-1, 0);  //å‘å·¦
+            train_rotation = 90;  //è½¬å‘
             trainhead_RB.velocity = trainSpeed * moveDir;
-            this.SetRoute(new Route(transform.position, moveDir));  //ÉèÖÃ×ªÏòÊ±µÄĞÅÏ¢
+            this.SetRoute(new Route(transform.position, moveDir));  //è®¾ç½®è½¬å‘æ—¶çš„ä¿¡æ¯
         }
         if (Input.GetKey(KeyCode.S) && moveDir.y != 1)
         {
-            moveDir = new Vector2(0, -1);  //ÏòÏÂ
-            train_rotation = 180;  //×ªÏò
+            moveDir = new Vector2(0, -1);  //å‘ä¸‹
+            train_rotation = 180;  //è½¬å‘
             trainhead_RB.velocity = trainSpeed * moveDir;
-            this.SetRoute(new Route(transform.position, moveDir));  //ÉèÖÃ×ªÏòÊ±µÄĞÅÏ¢
+            this.SetRoute(new Route(transform.position, moveDir));  //è®¾ç½®è½¬å‘æ—¶çš„ä¿¡æ¯
         }
         if (Input.GetKey(KeyCode.D) && moveDir.x != (-1))
         {
-            moveDir = new Vector2(1, 0);  //Ïòºó
-            train_rotation = -90;  //×ªÏò
+            moveDir = new Vector2(1, 0);  //å‘å
+            train_rotation = -90;  //è½¬å‘
             trainhead_RB.velocity = trainSpeed * moveDir;
-            this.SetRoute(new Route(transform.position, moveDir));  //ÉèÖÃ×ªÏòÊ±µÄĞÅÏ¢
+            this.SetRoute(new Route(transform.position, moveDir));  //è®¾ç½®è½¬å‘æ—¶çš„ä¿¡æ¯
         }
     }
 
-    public Vector2 GetDir()  //»ñÈ¡»ğ³µÍ·³¯Ïò
+    public Vector2 GetDir()  //è·å–ç«è½¦å¤´æœå‘
     {
         return moveDir;
     }
 
-    public float GetTrainSpeed()  //»ñÈ¡»ğ³µµÄËÙ¶È
+    public float GetTrainSpeed()  //è·å–ç«è½¦çš„é€Ÿåº¦
     {
         return this.trainSpeed;
     }
 
-    public void SetRoute(Route new_route)  //route Set·½·¨
+    public void SetRoute(Route new_route)  //route Setæ–¹æ³•
     {
         this.route = new_route;
         this.onRouteSetted();
     }
 
-    public Route GetRoute()  //route Get·½·¨
+    public Route GetRoute()  //route Getæ–¹æ³•
     {
         return this.route;
     }

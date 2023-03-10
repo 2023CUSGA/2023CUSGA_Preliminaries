@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +15,7 @@ public class ChangeNumberTest : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            ResoursesManager.GetInstance().AddResourses("�Ͻ�",2);
+            ResoursesManager.GetInstance().AddResourses("合金",2);
         }
     }
 }

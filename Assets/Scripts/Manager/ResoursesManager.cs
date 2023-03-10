@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,20 +6,20 @@ using UnityEngine;
 
 public class ResoursesManager : MonoBehaviour
 {
-    private static ResoursesManager instance;  //µ¥ÀıÄ£Ê½
-    public enum resourseNames:int  //×ÊÔ´Ãû³Æ¼°Æä¶ÔÓ¦µÄ±àºÅ
+    private static ResoursesManager instance;  //å•ä¾‹æ¨¡å¼
+    public enum resourseNames:int  //èµ„æºåç§°åŠå…¶å¯¹åº”çš„ç¼–å·
     {
-        Ä¾²Ä = 0,
-        Ê¯²Ä = 1,
-        Í­¿é = 2,
-        Ìú¿é = 3,
-        ºÏ½ğ = 4,
-        ½ğ±Ò = 5
+        æœ¨æ = 0,
+        çŸ³æ = 1,
+        é“œå— = 2,
+        é“å— = 3,
+        åˆé‡‘ = 4,
+        é‡‘å¸ = 5
     }
 
-    //×ÊÔ´¹ÜÀí
-    private List<int> resoursesList;  //×ÊÔ´ÊıÁ¿list
-    public Action OnResourseNumberChanged;  //×ÊÔ´ÊıÁ¿¸Ä±äÊÂ¼ş
+    //èµ„æºç®¡ç†
+    private List<int> resoursesList;  //èµ„æºæ•°é‡list
+    public Action OnResourseNumberChanged;  //èµ„æºæ•°é‡æ”¹å˜äº‹ä»¶
 
     void Awake()
     {
@@ -35,23 +35,23 @@ public class ResoursesManager : MonoBehaviour
         OnResourseNumberChanged();
     }
 
-    public int GetResoursesNumber(string name)  //·µ»Ø×ÊÔ´ÊıÁ¿
+    public int GetResoursesNumber(string name)  //è¿”å›èµ„æºæ•°é‡
     {
         return resoursesList[(int)Enum.Parse(typeof(resourseNames), name)];
     }
 
-    public void AddResourses(string name,int num)  //×ÊÔ´ÊıÁ¿µÄÔö¼õ
+    public void AddResourses(string name,int num)  //èµ„æºæ•°é‡çš„å¢å‡
     {
         resoursesList[(int)Enum.Parse(typeof(resourseNames), name)] += num;
         OnResourseNumberChanged();
     }
 
-    private void LoadFromLocal()  //´Ó±¾µØ´æµµ¶ÁÈ¡Êı¾İ
+    private void LoadFromLocal()  //ä»æœ¬åœ°å­˜æ¡£è¯»å–æ•°æ®
     {
-        //´Ó±¾µØ´æµµ¶ÁÈ¡Êı¾İ
+        //ä»æœ¬åœ°å­˜æ¡£è¯»å–æ•°æ®
     }
 
-    public static ResoursesManager GetInstance()  //µ¥ÀıÄ£Ê½
+    public static ResoursesManager GetInstance()  //å•ä¾‹æ¨¡å¼
     {
         return instance;
     }

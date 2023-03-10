@@ -1,33 +1,29 @@
-using System;
+锘縰sing System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TrainManager : MonoBehaviour
 {
-    private static TrainManager instance;  //火车管理器，单例模式
-    [SerializeField]private int trainLength;  //火车长度
-
-    //资源管理
-    private int numberOfReousrses1 = 0;
-    private int numberOfResourses2 = 0;
+    private static TrainManager instance;  //鐏溅绠＄悊鍣紝鍗曚緥妯″紡
+    [SerializeField]private int trainLength;  //鐏溅闀垮害
 
     private void Awake()
     {
-        instance = this;  //单例模式
+        instance = this;  //鍗曚緥妯″紡
     }
 
-    public static TrainManager GetInstance()  //单例模式
+    public static TrainManager GetInstance()  //鍗曚緥妯″紡
     {
         return instance;
     }
 
-    public int GetTrainLength()  //trainLength Get方法
+    public int GetTrainLength()  //trainLength Get鏂规硶
     {
         return this.trainLength;
     }
 
-    public void SetTrainLength(int length)  //trainLength Set方法
+    public void SetTrainLength(int length)  //trainLength Set鏂规硶
     {
         this.trainLength = length;
     }

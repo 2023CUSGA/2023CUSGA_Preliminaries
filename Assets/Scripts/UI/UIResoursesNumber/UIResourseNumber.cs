@@ -1,25 +1,25 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIResourseNumber : MonoBehaviour
 {
-    [SerializeField]private string resourseName;  //×ÊÔ´Ãû³Æ
+    [SerializeField]private string resourseName;  //èµ„æºåç§°
     
     // Start is called before the first frame update
     void Start()
     {
-        resourseName = this.name;  //»ñÈ¡×ÊÔ´Ãû³Æ
-        InitFunc();  //³õÊ¼»¯×ÊÔ´
+        resourseName = this.name;  //è·å–èµ„æºåç§°
+        InitFunc();  //åˆå§‹åŒ–èµ„æº
     }
 
-    void ReNewText()  //¸üĞÂUI
+    void ReNewText()  //æ›´æ–°UI
     {
         this.GetComponent<Text>().text = ": " + ResoursesManager.GetInstance().GetResoursesNumber(resourseName);
     }
 
-    void InitFunc()  //³õÊ¼»¯
+    void InitFunc()  //åˆå§‹åŒ–
     {
         ResoursesManager.GetInstance().OnResourseNumberChanged += this.ReNewText;
         this.GetComponent<Text>().text = ": " + ResoursesManager.GetInstance().GetResoursesNumber(resourseName);
