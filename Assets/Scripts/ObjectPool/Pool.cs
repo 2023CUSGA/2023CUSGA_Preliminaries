@@ -30,23 +30,28 @@ public class Pool
 
         return copy;
     }
-
+    /// <summary>
+    /// 在队列中找一个可用对象
+    /// </summary>
+    /// <returns></returns>
     GameObject AvailableObject()
     {
         GameObject availableObject = null;
-        if (queue.Count > 0 && !queue.Peek().activeSelf)
+        if (queue.Count > 0 && !queue.Peek().activeSelf)    // 有可用的就出列
         {
             availableObject = queue.Dequeue();
         }
         else
         {
-            availableObject = Copy();
+            availableObject = Copy();       // 没有可用的就再复制一个
         }
         queue.Enqueue(availableObject);
 
         return availableObject;
     }
-
+    /// <summary>
+    /// 外部调用获取对象
+    /// </summary>
     public GameObject PreparedObject()
     {
         GameObject preparedObject = AvailableObject();
@@ -55,7 +60,9 @@ public class Pool
 
         return preparedObject;
     }
-
+    /// <summary>
+    /// 外部调用获取对象，在指定位置生成
+    /// </summary>
     public GameObject PreparedObject(Vector3 position)
     {
         GameObject preparedObject = AvailableObject();
