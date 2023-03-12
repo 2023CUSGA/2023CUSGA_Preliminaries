@@ -7,9 +7,12 @@ public class Bomb : AttackObjectBase
     [Header("炸弹飞行速度")]
     [SerializeField]
     private float speed;
-    [Header("炸弹投掷半径，为0表示为炮弹")]
+    [Header("是否为炮弹")]
     [SerializeField]
-    private float radius_throw;
+    private bool is_cannonball;
+    [Header("攻击范围")]
+    [SerializeField]
+    private float distance;
     [Header("爆炸半径")]
     [SerializeField]
     private float radius_boom;
@@ -24,25 +27,40 @@ public class Bomb : AttackObjectBase
     private void Start()
     {
         enemies = new List<EnemyBase>();
-        if (radius_throw != 0.0f)
+        CircleCollider2D[] colliders = GetComponents<CircleCollider2D>();
+        foreach (CircleCollider2D collider in colliders)
+        {
+            if (collider.isTrigger == true)
+            {
+                collider.radius = radius_boom;
+                break;
+            }
+        }
+        if (!is_cannonball)
         {
             p0 = transform.position;
-            p = p0 + radius_throw * new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+            p = p0 + distance * new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             dis0 = (p - p0).magnitude;
             transform.rotation = Quaternion.identity;
             transform.Rotate(0, 0, Vector3.Angle(transform.right, (p - p0)));
-            dis = 0.0f;
         }
-        
+        dis = 0.0f;
     }
 
     private void FixedUpdate()
     {
         dis += speed * Time.deltaTime;
         transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
-        if (radius_throw != 0.0f)
+        if (!is_cannonball)
         {
             if (dis >= dis0)
+            {
+                Explode();
+            }
+        }
+        else
+        {
+            if (dis >= distance)
             {
                 Explode();
             }
@@ -58,21 +76,7 @@ public class Bomb : AttackObjectBase
         DestroyGameObject();
     }
 
-    protected override void Attack(EnemyBase enemy)
-    {
-        enemy.Hurt(damage);
-        if (buff != "" && buff != "无")
-        {
-            BuffManager buffManager = enemy.gameObject.GetComponent<BuffManager>();
-            if (buffManager == null)
-            {
-                buffManager = enemy.gameObject.AddComponent<BuffManager>();
-            }
-            buffManager.AddBuff((BuffName)System.Enum.Parse(typeof(BuffName), buff), enemy);
-        }
-    }
-
-    protected new void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         Explode();
     }
@@ -94,5 +98,4 @@ public class Bomb : AttackObjectBase
             enemies.Remove(enemy);
         }
     }
-
 }

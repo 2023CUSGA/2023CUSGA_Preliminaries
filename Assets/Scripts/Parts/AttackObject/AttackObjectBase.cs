@@ -11,16 +11,18 @@ public abstract class AttackObjectBase : MonoBehaviour
     [SerializeField]
     protected string buff;
 
-    protected abstract void Attack(EnemyBase enemy);
-
-    protected void OnCollisionEnter2D(Collision2D collision)
+    protected void Attack(EnemyBase enemy)
     {
-        EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
-        if (enemy != null)
+        enemy.Hurt(damage);
+        if (buff != "" && buff != "无")
         {
-            Attack(enemy);
+            BuffManager buffManager = enemy.gameObject.GetComponent<BuffManager>();
+            if (buffManager == null)
+            {
+                buffManager = enemy.gameObject.AddComponent<BuffManager>();
+            }
+            buffManager.AddBuff((BuffName)System.Enum.Parse(typeof(BuffName), buff), enemy);
         }
-        DestroyGameObject();
     }
 
     protected void OnBecameInvisible()
