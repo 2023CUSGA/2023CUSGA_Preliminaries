@@ -39,13 +39,14 @@ public class TrainBodyMovement : TrainBody
 
     private void FixedUpdate()
     {
-        RenewRoute();
+        //RenewRoute();
     }
 
     // Update is called once per frame
     void Update()
     {
         MoveFunc();
+        RenewRoute();
     }
 
     void MoveFunc()  //移动函数
@@ -96,10 +97,13 @@ public class TrainBodyMovement : TrainBody
                 this.SetRoute(new Route(this.transform.position, this.moveDir));  //设置转向时的信息
                 routeList.RemoveAt(0);
                 if (Vector2.Distance(preNode.transform.position, transform.position) != this.distace)  //转向后修正
-                    transform.position = preNode.transform.position - new Vector3(this.moveDir.x, this.moveDir.y, 0) * this.distace;
-                
+                {
+                    this.transform.position = preNode.transform.position - new Vector3(this.moveDir.x, this.moveDir.y, 0) * this.distace;
+                    //Debug.LogWarning("re id:" + this.id + " " + transform.position + " " + preNode.transform.position);
+                }
             }
         }
+        //Debug.Log("id:" + this.id + " " + transform.position + " " + preNode.transform.position);
         /*
         if ((Vector2.Distance(preNode.transform.position, transform.position) - this.distace) > 0.05f)  //修正
         {
@@ -116,21 +120,25 @@ public class TrainBodyMovement : TrainBody
         if (moveDir.Equals(new Vector2(0, 1)))
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);  //调整图形角度
+            //trainbody_RB.SetRotation (Quaternion.Euler(0, 0, 0));
             return;
         }
         if (moveDir.Equals(new Vector2(-1, 0)))
         {
             transform.rotation = Quaternion.Euler(0, 0, 90);  //调整图形角度
+            //trainbody_RB.SetRotation(Quaternion.Euler(0, 0, 90));
             return;
         }
         if (moveDir.Equals(new Vector2(0, -1)))
         {
             transform.rotation = Quaternion.Euler(0, 0, 180);  //调整图形角度
+            //trainbody_RB.SetRotation(Quaternion.Euler(0, 0, 180));
             return;
         }
         if (moveDir.Equals(new Vector2(1, 0)))
         {
             transform.rotation = Quaternion.Euler(0, 0, -90);  //调整图形角度
+            //trainbody_RB.SetRotation(Quaternion.Euler(0, 0, -90));
             return;
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class TrainheadMovement : MonoBehaviour
 {
     [Header("火车最大运动速度")]
-    [SerializeField] private float moveSpeed = 5.0f;  //移动速度
+    [SerializeField] private float moveSpeed = 3.0f;  //移动速度
     [Header("火车加速度")]
     [SerializeField] private float accelerateedSpeed = 1.0f;  //加速度 
     [Header("火车刚体")]
@@ -14,6 +14,8 @@ public class TrainheadMovement : MonoBehaviour
 
     protected Vector2 moveDir = new Vector2(0, 1);  //火车运行方向
     private bool isMoving = false;  //是否在运动中
+    private bool isDizzy = false;  //是否在晕眩中
+    private bool canMove = true;  //火车能否启动
     private float trainSpeed = 0;  //火车当前的速度
     private int train_rotation = 0;  //火车的朝向
     private Route route;  //转向信息
@@ -42,10 +44,17 @@ public class TrainheadMovement : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (isMoving == true)
+            if(canMove)  //如果可以运动
+            {
+                if (isMoving == true)
+                    isMoving = false;
+                else
+                    isMoving = true;
+            }else  //不能运动的情况：即仍然撞在障碍物上
+            {
                 isMoving = false;
-            else
-                isMoving = true;
+                DizzyFunc();
+            }
         }
     }
 
@@ -80,6 +89,7 @@ public class TrainheadMovement : MonoBehaviour
     void DirFunc()  //转向函数
     {
         transform.rotation = Quaternion.Euler(0, 0, train_rotation);  //调整图形角度
+        //trainhead_RB.SetRotation(Quaternion.Euler(0, 0, train_rotation));
         if (Input.GetKey(KeyCode.W) && moveDir.y != (-1))  //如果按下“w”键且火车方向不是向下
         {
             moveDir = new Vector2(0, 1);  //向上
@@ -129,5 +139,39 @@ public class TrainheadMovement : MonoBehaviour
     public Route GetRoute()  //route Get方法
     {
         return this.route;
+    }
+
+    public bool GetIsMoving()  //isMoving Get方法
+    {
+        return this.isMoving;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)  //碰撞检测函数
+    {
+        if(collision.gameObject.tag == "RoadBlock" || collision.gameObject.tag == "ResoursePoint" || collision.gameObject.tag == "TrianBody")
+        {
+            this.trainSpeed = 0;
+            trainhead_RB.velocity = moveDir * trainSpeed;
+            DizzyFunc();  //晕眩函数
+            canMove = false;
+            isMoving = false;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "RoadBlock" || collision.gameObject.tag == "ResoursePoint" || collision.gameObject.tag == "TrianBody")  //仍然在障碍物上
+            canMove = false;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "RoadBlock" || collision.gameObject.tag == "ResoursePoint" || collision.gameObject.tag == "TrianBody")  //离开障碍物检测
+            canMove = true;
+    }
+
+    private void DizzyFunc()  //晕眩函数
+    {
+        Debug.Log("晕眩3秒");
     }
 }
