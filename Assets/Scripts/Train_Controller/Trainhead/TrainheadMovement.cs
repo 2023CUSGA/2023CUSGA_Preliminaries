@@ -14,6 +14,7 @@ public class TrainheadMovement : MonoBehaviour
 
     protected Vector2 moveDir = new Vector2(0, 1);  //火车运行方向
     private bool isMoving = false;  //是否在运动中
+    private bool isDizzy = false;  //是否在晕眩中
     private bool canMove = true;  //火车能否启动
     private float trainSpeed = 0;  //火车当前的速度
     private int train_rotation = 0;  //火车的朝向
@@ -52,7 +53,7 @@ public class TrainheadMovement : MonoBehaviour
             }else  //不能运动的情况：即仍然撞在障碍物上
             {
                 isMoving = false;
-                DeezeFunc();
+                DizzyFunc();
             }
         }
     }
@@ -140,13 +141,18 @@ public class TrainheadMovement : MonoBehaviour
         return this.route;
     }
 
+    public bool GetIsMoving()  //isMoving Get方法
+    {
+        return this.isMoving;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)  //碰撞检测函数
     {
-        if(collision.gameObject.tag == "RoadBlock")
+        if(collision.gameObject.tag == "RoadBlock" || collision.gameObject.tag == "ResoursePoint" || collision.gameObject.tag == "TrianBody")
         {
             this.trainSpeed = 0;
             trainhead_RB.velocity = moveDir * trainSpeed;
-            DeezeFunc();  //晕眩函数
+            DizzyFunc();  //晕眩函数
             canMove = false;
             isMoving = false;
         }
@@ -154,17 +160,17 @@ public class TrainheadMovement : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "RoadBlock")  //仍然在障碍物上
+        if (collision.gameObject.tag == "RoadBlock" || collision.gameObject.tag == "ResoursePoint" || collision.gameObject.tag == "TrianBody")  //仍然在障碍物上
             canMove = false;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "RoadBlock")  //离开障碍物检测
+        if (collision.gameObject.tag == "RoadBlock" || collision.gameObject.tag == "ResoursePoint" || collision.gameObject.tag == "TrianBody")  //离开障碍物检测
             canMove = true;
     }
 
-    private void DeezeFunc()  //晕眩函数
+    private void DizzyFunc()  //晕眩函数
     {
         Debug.Log("晕眩3秒");
     }
