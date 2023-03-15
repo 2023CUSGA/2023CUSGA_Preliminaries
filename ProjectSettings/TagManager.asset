@@ -6,6 +6,7 @@ TagManager:
   tags:
   - TrainHead
   - TrainBody
+  - RoadBlock
   layers:
   - Default
   - TransparentFX
