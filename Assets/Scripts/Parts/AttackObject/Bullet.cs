@@ -11,25 +11,39 @@ public class Bullet : AttackObjectBase
     [SerializeField]
     private float distance;
 
+    private Rigidbody2D rb;
     private float dis;
+
+    private void Start()
+    {
+        rb = gameObject.GetComponent<Rigidbody2D>();
+    }
 
     private void FixedUpdate()
     {
         dis += speed * Time.deltaTime;
-        transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+        rb.MovePosition(transform.position + speed * Time.deltaTime * transform.right);
         if (dis >= distance)
         {
             DestroyGameObject();
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
+        EnemyBase enemy = GetEnemy(collision);
         if (enemy != null)
         {
             Attack(enemy);
+            DestroyGameObject();
         }
-        DestroyGameObject();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.gameObject.CompareTag("AttackObject"))
+        {
+            DestroyGameObject();
+        }
     }
 }

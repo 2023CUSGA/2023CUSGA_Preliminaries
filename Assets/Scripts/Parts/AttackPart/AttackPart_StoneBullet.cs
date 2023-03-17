@@ -14,20 +14,20 @@ public class AttackPart_StoneBullet : AttackPartBase
     protected override void Attack()
     {
         Shoot();
-        Invoke(nameof(Shoot), 0.5f);
-        Invoke(nameof(Shoot_buff), 1f);
+        Invoke(nameof(Shoot), 0.25f);
+        Invoke(nameof(Shoot_buff), 0.5f);
     }
 
     private void Shoot()
     {
         Vector3 p0 = transform.position;
-        float angle_l = transform.rotation.z + 90.0f;
-        Vector3 p_l = Quaternion.Euler(0, 0, angle_l) * transform.right;
+        float angle_l = transform.rotation.eulerAngles.z + 90f;
+        Vector3 p_l = Quaternion.Euler(0, 0, 90f) * transform.right;
         Instantiate(prefeb, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l - 30f));
         Instantiate(prefeb, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l));
         Instantiate(prefeb, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l + 30f));
-        float angle_r = transform.rotation.z + 90.0f;
-        Vector3 p_r = Quaternion.Euler(0, 0, angle_r) * transform.right;
+        float angle_r = transform.rotation.eulerAngles.z - 90f;
+        Vector3 p_r = Quaternion.Euler(0, 0, -90f) * transform.right;
         Instantiate(prefeb, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r - 30f));
         Instantiate(prefeb, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r));
         Instantiate(prefeb, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r + 30f));
@@ -36,13 +36,13 @@ public class AttackPart_StoneBullet : AttackPartBase
     private void Shoot_buff()
     {
         Vector3 p0 = transform.position;
-        float angle_l = transform.rotation.z + 90.0f;
-        Vector3 p_l = Quaternion.Euler(0, 0, angle_l) * transform.right;
+        float angle_l = transform.rotation.eulerAngles.z + 90;
+        Vector3 p_l = Quaternion.Euler(0, 0, 90f) * transform.right;
         Instantiate(prefeb_buff, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l - 30f));
         Instantiate(prefeb_buff, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l));
         Instantiate(prefeb_buff, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l + 30f));
-        float angle_r = transform.rotation.z + 90.0f;
-        Vector3 p_r = Quaternion.Euler(0, 0, angle_r) * transform.right;
+        float angle_r = transform.rotation.eulerAngles.z - 90f;
+        Vector3 p_r = Quaternion.Euler(0, 0, -90f) * transform.right;
         Instantiate(prefeb_buff, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r - 30f));
         Instantiate(prefeb_buff, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r));
         Instantiate(prefeb_buff, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r + 30f));

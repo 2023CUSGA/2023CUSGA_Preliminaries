@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3489593314986615667}
   - component: {fileID: 7410287668245092521}
   - component: {fileID: 6740404888831573062}
+  - component: {fileID: 8721039594551465421}
   m_Layer: 0
   m_Name: train_body0
   m_TagString: TrainBody
@@ -77,10 +78,10 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -978487575, guid: b758e4a34f3b2694d940c81f75d140d5, type: 3}
+  m_Sprite: {fileID: 1828034478, guid: 68ba1dcddb630754aa86ec7333eec919, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 1
+  m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 10.42, y: 20.36}
   m_AdaptiveModeThreshold: 0.5
@@ -136,19 +137,33 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.088116646, y: -0.4382224}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.42, y: 20.36}
+    oldSize: {x: 10.25, y: 18.88}
     newSize: {x: 10.42, y: 20.36}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10.42, y: 20.36}
+  m_Size: {x: 11, y: 16.282253}
   m_EdgeRadius: 0
+--- !u!114 &8721039594551465421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3489593314986615664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd7962259b13d16448bfcfba9ab28ccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  health: 0
 --- !u!1 &3489593315677014394
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +177,7 @@ GameObject:
   m_Layer: 0
   m_Name: childNode
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

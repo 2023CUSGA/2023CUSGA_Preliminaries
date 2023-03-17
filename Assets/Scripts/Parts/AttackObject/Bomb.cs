@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class Bomb : AttackObjectBase
@@ -17,7 +18,10 @@ public class Bomb : AttackObjectBase
     [SerializeField]
     private float radius_boom;
 
+    private Rigidbody2D rb;
     private List<EnemyBase> enemies;
+    public void AddEnemy(EnemyBase enemy) { enemies.Add(enemy); }
+    public void RemoveEnemy(EnemyBase enemy) { enemies.Remove(enemy); }
 
     private Vector3 p0;
     private Vector3 p;  //目标爆点
@@ -26,6 +30,7 @@ public class Bomb : AttackObjectBase
 
     private void Start()
     {
+        rb = gameObject.GetComponent<Rigidbody2D>();
         enemies = new List<EnemyBase>();
         CircleCollider2D[] colliders = GetComponents<CircleCollider2D>();
         foreach (CircleCollider2D collider in colliders)
@@ -50,7 +55,7 @@ public class Bomb : AttackObjectBase
     private void FixedUpdate()
     {
         dis += speed * Time.deltaTime;
-        transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+        rb.MovePosition(transform.position + new Vector3(speed * Time.deltaTime, 0, 0));
         if (!is_cannonball)
         {
             if (dis >= dis0)
@@ -78,24 +83,18 @@ public class Bomb : AttackObjectBase
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Explode();
+        if (!collision.gameObject.CompareTag("AttackObject"))
+        {
+            Explode();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
+        EnemyBase enemy = GetEnemy(collision);
         if (enemy != null)
         {
-            enemies.Add(enemy);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
-        if (enemy != null)
-        {
-            enemies.Remove(enemy);
+            Explode();
         }
     }
 }

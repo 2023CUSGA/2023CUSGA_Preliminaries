@@ -26,7 +26,7 @@ public class UISettingPanel : MonoBehaviour
     /// </summary>
     public void ClosePanel()
     {
-        //SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Click);  // 播放点击按钮音效
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_UIClick);  // 播放点击按钮音效
         this.gameObject.SetActive(false);
         PlayerPrefs.Save();          // 保存音量设置
     }
@@ -37,7 +37,7 @@ public class UISettingPanel : MonoBehaviour
     public void MusicToogle(bool on)
     {
         SoundConfig.MusicOn = on;    // 给配置文件赋值记录状态
-        //SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Click);    // 播放点击按钮音效
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_UIClick);    // 播放点击按钮音效
 
     }
     /// <summary>
@@ -46,7 +46,7 @@ public class UISettingPanel : MonoBehaviour
     public void SoundToogle(bool on)
     {
         SoundConfig.SoundOn = on;
-        //SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Click);
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_UIClick);
     }
 
     public void MusicVolume(float vol)
@@ -72,7 +72,7 @@ public class UISettingPanel : MonoBehaviour
         if (Time.realtimeSinceStartup - lastPlay > 0.1)
         {
             lastPlay = Time.realtimeSinceStartup;
-            //SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Click);
+            SoundManager.Instance.PlaySound(SoundDefine.Sound_UIClick);
         }
 
     }

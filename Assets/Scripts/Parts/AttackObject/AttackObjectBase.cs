@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public abstract class AttackObjectBase : MonoBehaviour
@@ -10,6 +11,21 @@ public abstract class AttackObjectBase : MonoBehaviour
     [Header("造成的Buff，“无”或留空表示没有")]
     [SerializeField]
     protected string buff;
+
+    protected EnemyBase GetEnemy(Collision2D collision)
+    {
+        EnemyBase enemy = null;
+        if ((enemy = collision.gameObject.GetComponent<NormalEnemy>()) != null) { }
+        else if ((enemy = collision.gameObject.GetComponent<TankEnemy>()) != null) { }
+        return enemy;
+    }
+    public EnemyBase GetEnemy(Collider2D collision)
+    {
+        EnemyBase enemy = null;
+        if ((enemy = collision.GetComponent<NormalEnemy>()) != null) { }
+        else if ((enemy = collision.GetComponent<TankEnemy>()) != null) { }
+        return enemy;
+    }
 
     protected void Attack(EnemyBase enemy)
     {
@@ -30,7 +46,7 @@ public abstract class AttackObjectBase : MonoBehaviour
         DestroyGameObject();
     }
 
-    protected void DestroyGameObject()
+    public void DestroyGameObject()
     {
         Destroy(gameObject);
     }
