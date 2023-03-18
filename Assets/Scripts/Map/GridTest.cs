@@ -6,6 +6,10 @@ using UnityEngine;
 public class GridTest : MonoBehaviour
 {
     Grid grid;
+    public GameObject Obstacle1;
+    public GameObject Obstacle2;
+    public GameObject Obstacle3;
+
 
     private void Start()
     {
@@ -18,7 +22,7 @@ public class GridTest : MonoBehaviour
         {
             Destroy(transform.GetChild(i).gameObject);
         }
-        grid.ShowGridInfo();
+        grid.ShowGridInfo(Obstacle1, Obstacle2, Obstacle3);
     }
 
 

@@ -22,6 +22,10 @@ public class Grid
 
     WorldObject[] worldObjects;
 
+    public GameObject Obstacle1;
+    public GameObject Obstacle2;
+    public GameObject Obstacle3;
+
     public Grid(int width, int height, float cellSize, Transform owner)
     {
         this.width = width;
@@ -47,8 +51,11 @@ public class Grid
 
     Vector3 GetWorldPosition(int x, int y) => new Vector3(x, y) * cellSize;
     
-    public void ShowGridInfo()
+    public void ShowGridInfo(GameObject obstacle1, GameObject obstacle2, GameObject obstacle3)
     {
+        this.Obstacle1 = obstacle1;
+        this.Obstacle2 = obstacle2;
+        this.Obstacle3 = obstacle3;
 
         objList.Clear();
         for (int x = 0; x < width; x++)
@@ -128,6 +135,7 @@ public class Grid
         {
             gridArry[x, y] = WorldObject.ResourcePoint;
             Utils.CreateWorldText("Res", owner, GetWorldPosition(x, y) + offsest * 0.5f, 30, objList,Color.yellow, TextAnchor.MiddleCenter);
+            
         }
     }
     void CreateObstacle1(int i)
@@ -137,7 +145,8 @@ public class Grid
         if (gridArry[x, y] == WorldObject.None)
         {
             gridArry[x, y] = WorldObject.Obstacle1;
-            Utils.CreateWorldText("1", owner, GetWorldPosition(x, y) + offsest * 0.5f, 30, objList, Color.white, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("1", owner, GetWorldPosition(x, y) + offsest * 0.5f, 30, objList, Color.white, TextAnchor.MiddleCenter);
+            PoolManager.Release(Obstacle1, GetWorldPosition(x, y));
         }
     }
     void CreateObstacle2(int i)
@@ -156,10 +165,11 @@ public class Grid
             gridArry[x1, y2] = WorldObject.Obstacle2;
             gridArry[x2, y1] = WorldObject.Obstacle2;
             gridArry[x2, y2] = WorldObject.Obstacle2;
-            Utils.CreateWorldText("2", owner, GetWorldPosition(x1, y1) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("2", owner, GetWorldPosition(x1, y2) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("2", owner, GetWorldPosition(x2, y1) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("2", owner, GetWorldPosition(x2, y2) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("2", owner, GetWorldPosition(x1, y1) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("2", owner, GetWorldPosition(x1, y2) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("2", owner, GetWorldPosition(x2, y1) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("2", owner, GetWorldPosition(x2, y2) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
+            PoolManager.Release(Obstacle2, GetWorldPosition(x1, y1));
 
         }
     }
@@ -186,16 +196,16 @@ public class Grid
             gridArry[x3, y1] = WorldObject.Obstacle3;
             gridArry[x3, y2] = WorldObject.Obstacle3;
             gridArry[x3, y3] = WorldObject.Obstacle3;
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            //Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
+            PoolManager.Release(Obstacle3, GetWorldPosition(x1, y1));
         }
     }
 

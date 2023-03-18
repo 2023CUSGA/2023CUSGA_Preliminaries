@@ -590,7 +590,7 @@ MonoBehaviour:
   readonlyMode: 0
   activeSettings:
     name: Default
-    id: 98420011-57cb-422c-94aa-cf1a8ca58b62
+    id: e1f1dfca-8908-482b-9622-f3a9dcdc4fb4
     skin: Default
     fileName: Default
     redistributable: 0
@@ -599,7 +599,7 @@ MonoBehaviour:
     type: json
   allSettings:
   - name: Default
-    id: 98420011-57cb-422c-94aa-cf1a8ca58b62
+    id: e1f1dfca-8908-482b-9622-f3a9dcdc4fb4
     skin: Default
     fileName: Default
     redistributable: 0
@@ -647,6 +647,12 @@ MonoBehaviour:
     size: 10
   - prefab: {fileID: 7975251878980787965, guid: 8ca7e06e0715fdb469c9d5e4a129122f, type: 3}
     size: 10
+  - prefab: {fileID: 7053126470071665638, guid: a8f8745a40331cd448346a50e48ea96f, type: 3}
+    size: 10
+  - prefab: {fileID: 3923704338335077871, guid: 89e2025da9bd75043a0f12cd60f965a7, type: 3}
+    size: 10
+  - prefab: {fileID: 2627840073258311959, guid: d8436bfb8dee51641ad181118d270f3f, type: 3}
+    size: 10
 --- !u!4 &1513971439
 Transform:
   m_ObjectHideFlags: 0
@@ -683,7 +689,7 @@ MonoBehaviour:
   readonlyMode: 0
   activeSettings:
     name: Default
-    id: 98420011-57cb-422c-94aa-cf1a8ca58b62
+    id: e1f1dfca-8908-482b-9622-f3a9dcdc4fb4
     skin: Default
     fileName: Default
     redistributable: 0
@@ -692,7 +698,7 @@ MonoBehaviour:
     type: json
   allSettings:
   - name: Default
-    id: 98420011-57cb-422c-94aa-cf1a8ca58b62
+    id: e1f1dfca-8908-482b-9622-f3a9dcdc4fb4
     skin: Default
     fileName: Default
     redistributable: 0

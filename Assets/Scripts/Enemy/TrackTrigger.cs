@@ -24,7 +24,7 @@ public class TrackTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("TrainHead"))
+        if (collision.CompareTag("TrainHead") || collision.CompareTag("TrainBody"))
         {
             targetTrain = collision.gameObject;
         }
