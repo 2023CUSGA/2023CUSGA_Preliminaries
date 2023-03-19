@@ -5,8 +5,15 @@ using UnityEngine;
 public class TrackTrigger : MonoBehaviour
 {
     public GameObject targetTrain;
-
+    private Collider2D trigger;
     private EnemyBase parent;
+
+    private void OnEnable()
+    {
+        trigger = GetComponent<Collider2D>();
+        trigger.enabled = true;
+
+    }
 
     private void Start()
     {
@@ -27,6 +34,7 @@ public class TrackTrigger : MonoBehaviour
         if (collision.CompareTag("TrainHead") || collision.CompareTag("TrainBody"))
         {
             targetTrain = collision.gameObject;
+            trigger.enabled = false;
         }
     }
 

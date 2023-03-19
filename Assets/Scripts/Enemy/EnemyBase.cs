@@ -9,6 +9,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyBase : EntityBase
 {
+
     public float maxHp;
     public float defaultAtk;
     public float defaultSpeed;

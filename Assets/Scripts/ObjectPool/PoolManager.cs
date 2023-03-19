@@ -66,7 +66,20 @@ public class PoolManager : MonoBehaviour
         return poolDic[prefab].PreparedObject(position);
     }
 
-
+    /// <summary>
+    /// 给其他脚本提供生成对象的方法，可指定位置，指定旋转
+    /// </summary>
+    public static GameObject Release(GameObject prefab, Vector3 position, Quaternion rotation)
+    {
+#if UNITY_EDITOR
+        if (!poolDic.ContainsKey(prefab))
+        {
+            Debug.LogError("没有找到该预制体的对象池" + prefab.name);
+            return null;
+        }
+#endif
+        return poolDic[prefab].PreparedObject(position, rotation);
+    }
 
 
 }
