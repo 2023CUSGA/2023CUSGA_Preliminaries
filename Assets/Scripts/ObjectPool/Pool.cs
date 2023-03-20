@@ -72,7 +72,19 @@ public class Pool
 
         return preparedObject;
     }
+    /// <summary>
+    /// 外部调用获取对象，在指定位置，指定旋转生成
+    /// </summary>
+    public GameObject PreparedObject(Vector3 position, Quaternion rotation)
+    {
+        GameObject preparedObject = AvailableObject();
 
+        preparedObject.SetActive(true);
+        preparedObject.transform.position = position;
+        preparedObject.transform.rotation = rotation;
+
+        return preparedObject;
+    }
 
 
     public void Return(GameObject gameObject) => queue.Enqueue(gameObject);
