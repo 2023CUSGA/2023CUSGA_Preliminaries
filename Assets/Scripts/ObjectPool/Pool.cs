@@ -8,6 +8,8 @@ public class Pool
 {
     public GameObject prefab;
     [SerializeField] int size = 1;
+    public int Size => size;
+    public int RuntimeSize => queue.Count;
 
     Queue<GameObject> queue;
     Transform parent;

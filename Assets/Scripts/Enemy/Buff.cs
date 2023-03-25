@@ -71,7 +71,7 @@ public class Buff
                 }
                 break;
             case BuffName.击退:
-                this.owner.Repulsed();
+                this.owner.Repulsed(80f);
                 break;
             case BuffName.穿刺:
                 break;

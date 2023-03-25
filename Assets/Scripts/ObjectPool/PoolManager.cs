@@ -34,6 +34,30 @@ public class PoolManager : MonoBehaviour
             pool.Initialize(poolParent);
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDestroy()
+    {
+        CheckPoolSize(pools);
+    } 
+#endif
+
+    /// <summary>
+    /// 检查每个池子初始化时的最大prefab数量
+    /// </summary>
+    /// <param name="pools"></param>
+    void CheckPoolSize(Pool[] pools)
+    {
+        foreach (var pool in pools)
+        {
+            if (pool.RuntimeSize > pool.Size)
+            {
+                Debug.LogWarning(string.Format("Pool:{0} has a runtime size {1} bigger than its initial size{2}",
+                    pool.prefab.name, pool.RuntimeSize, pool.Size));
+            }
+        }
+    }
+
     /// <summary>
     /// 给其他脚本提供生成对象的方法
     /// </summary>

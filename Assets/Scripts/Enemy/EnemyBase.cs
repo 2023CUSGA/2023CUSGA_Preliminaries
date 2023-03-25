@@ -27,17 +27,22 @@ public class EnemyBase : EntityBase
 
     BuffManager buffManager;
 
+    Rigidbody2D rb;
+
     /// <summary>
     /// 初始化
     /// </summary>
     public override void Init()
     {
+        rb = GetComponent<Rigidbody2D>();
         curr_hp = maxHp;
         curr_atk = defaultAtk;
         moveSpeed = defaultSpeed;
 
         buffManager = gameObject.GetComponent<BuffManager>();
         //animator = GetComponent<Animator>();
+
+        EnvironmentManager.instance.enemysList.Add(this);
     }
 
     public override void UpdateFunc()
@@ -88,6 +93,20 @@ public class EnemyBase : EntityBase
         if (curr_hp <= 0)       // 敌人死亡，返回对象池
         {
             this.gameObject.SetActive(false);
+            EnvironmentManager.instance.enemysList.Remove(this);
+
+            // TODO:掉金币
+        }
+    }
+
+    public void HurtByRatio(float ratio)
+    {
+        this.curr_hp -= this.curr_hp * ratio;
+        if (curr_hp <= 0)       // 敌人死亡，返回对象池
+        {
+            this.gameObject.SetActive(false);
+            EnvironmentManager.instance.enemysList.Remove(this);
+
             // TODO:掉金币
         }
     }
@@ -104,9 +123,20 @@ public class EnemyBase : EntityBase
     /// <summary>
     /// 击退效果
     /// </summary>
-    public void Repulsed()
+    public void Repulsed(float power)
     {
+        isChaos = true;
+        Vector2 dir = transform.position - GetComponentInChildren<TrackTrigger>().targetTrain.transform.position;
+        rb.AddForce(dir * power);
+        StartCoroutine(WaitForRepulsed());
         //this.transform.Translate();
+    }
+
+    IEnumerator WaitForRepulsed()
+    {
+        yield return new WaitForSeconds(1.5f);
+        isChaos = false;
+
     }
 
     /// <summary>
