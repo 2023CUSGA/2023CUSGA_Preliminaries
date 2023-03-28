@@ -11,13 +11,17 @@ public class Spike_Timer : MonoBehaviour
     private float t;
     private Bullet spike;
 
-    void Start()
+    private void Start()
     {
-        t = 0;
         spike = gameObject.GetComponent<Bullet>();
     }
 
-    void Update()
+    private void OnEnable()
+    {
+        t = 0;
+    }
+
+    private void Update()
     {
         t+= Time.deltaTime;
         if (t > time)

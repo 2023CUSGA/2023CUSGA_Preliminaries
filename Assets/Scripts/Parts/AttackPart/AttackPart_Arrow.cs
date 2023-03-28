@@ -20,9 +20,11 @@ public class AttackPart_Arrow : AttackPartBase
         Vector3 p0 = transform.position;
         float angle_l = transform.rotation.eulerAngles.z + 180f;
         Vector3 p_l = Quaternion.Euler(0, 0, 90f) * transform.up;
-        Instantiate(prefeb, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l));
+        //Instantiate(prefeb, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l));
+        PoolManager.Release(prefeb, p0 + 0.75f * p_l, Quaternion.Euler(0, 0, angle_l));
         float angle_r = transform.rotation.eulerAngles.z;
         Vector3 p_r = Quaternion.Euler(0, 0, -90f) * transform.up;
-        Instantiate(prefeb, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r));
+        //Instantiate(prefeb, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r));
+        PoolManager.Release(prefeb, p0 + 0.75f * p_r, Quaternion.Euler(0, 0, angle_r));
     }
 }

@@ -18,7 +18,6 @@ public class Bomb : AttackObjectBase
     [SerializeField]
     private float radius_boom;
 
-    private Rigidbody2D rb;
     private List<EnemyBase> enemies;
     public void AddEnemy(EnemyBase enemy) { enemies.Add(enemy); }
     public void RemoveEnemy(EnemyBase enemy) { enemies.Remove(enemy); }
@@ -30,7 +29,6 @@ public class Bomb : AttackObjectBase
 
     private void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
         enemies = new List<EnemyBase>();
         CircleCollider2D[] colliders = GetComponents<CircleCollider2D>();
         foreach (CircleCollider2D collider in colliders)
@@ -41,6 +39,19 @@ public class Bomb : AttackObjectBase
                 break;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        if (enemies == null)
+        {
+            enemies = new List<EnemyBase>();
+        }
+        else
+        {
+            enemies.Clear(); 
+        }
+        
         if (!is_cannonball)
         {
             p0 = transform.position;
@@ -55,7 +66,7 @@ public class Bomb : AttackObjectBase
     private void FixedUpdate()
     {
         dis += speed * Time.deltaTime;
-        rb.MovePosition(transform.position + new Vector3(speed * Time.deltaTime, 0, 0));
+        transform.position += speed * Time.deltaTime * transform.right;
         if (!is_cannonball)
         {
             if (dis >= dis0)
@@ -83,16 +94,12 @@ public class Bomb : AttackObjectBase
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("AttackObject"))
+        EnemyBase enemy = GetEnemy(collision);
+        if (enemy != null)
         {
             Explode();
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        EnemyBase enemy = GetEnemy(collision);
-        if (enemy != null)
+        if (!collision.gameObject.CompareTag("AttackObject"))
         {
             Explode();
         }
