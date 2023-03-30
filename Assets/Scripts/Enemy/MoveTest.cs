@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class MoveTest : MonoBehaviour
 {
+    public float power = 2f;
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        collision.gameObject.GetComponent<EnemyBase>().Repulsed(power);
+    }
+
     private void Update()
     {
         if (Input.GetKey(KeyCode.A))
