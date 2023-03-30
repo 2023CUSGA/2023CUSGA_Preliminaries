@@ -39,6 +39,7 @@ public class TrainBodyMovement : TrainBody
 
     private void FixedUpdate()
     {
+        //MoveFunc();
         //RenewRoute();
     }
 
@@ -89,7 +90,7 @@ public class TrainBodyMovement : TrainBody
         {
             Vector2 tempPosition = routeList[0].GetCurrentPosition();
             Vector2 tempDir = routeList[0].GetCurrentDir();
-            if (Vector2.Distance(tempPosition, transform.position) < 0.1f)
+            if (Vector2.Distance(tempPosition, transform.position) < 0.15f)
             {
                 this.moveDir = tempDir;
                 ChangeRotation(moveDir);  //改变图片朝向

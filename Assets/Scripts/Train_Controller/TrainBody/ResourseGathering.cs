@@ -12,13 +12,13 @@ public class ResourseGathering : TrainBody
     void Start()
     {
         trainHead = GameObject.Find("train_head");  //获取火车头物体
-        speed = trainHead.GetComponent<TrainheadMovement>().GetTrainSpeed();  //是否移动
+        speed = trainHead.GetComponent<TrainheadMov>().GetTrainSpeed();  //是否移动
     }
 
     // Update is called once per frame
     void Update()
     {
-        speed = trainHead.GetComponent<TrainheadMovement>().GetTrainSpeed();
+        speed = trainHead.GetComponent<TrainheadMov>().GetTrainSpeed();
         CollectResourse();
     }
 
@@ -40,7 +40,7 @@ public class ResourseGathering : TrainBody
 
     private void CollectResourse()  //采集资源
     {
-        if(speed.Equals(0) && isInResoursePoint)
+        if(speed.Equals(0) && isInResoursePoint && !GameObject.Find("train_head").GetComponent<TrainheadMov>().GetIsDizzy())
         {
             Debug.Log(id + " " + "资源采集中");
         }
