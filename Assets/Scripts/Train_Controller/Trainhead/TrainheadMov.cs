@@ -176,6 +176,7 @@ public class TrainheadMov : MonoBehaviour
         }
         if(collision.gameObject.tag=="enemy")
         {
+            TrainManager.GetInstance().OnCrashEnermy();
             Debug.Log("撞击敌人");
         }
     }

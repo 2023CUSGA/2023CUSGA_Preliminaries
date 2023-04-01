@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,36 +6,36 @@ using UnityEngine;
 
 public class TrainBodyMov : TrainBody
 {
-    private GameObject train_head;  //»ğ³µÍ·ÎïÌå
-    [SerializeField]private Vector2 moveDir;  //µ±Ç°½ÚµãÒÆ¶¯·½Ïò
-    private Rigidbody2D trainbody_RB;  //µ±Ç°½ÚµãµÄ¸ÕÌå
-    private GameObject childNode;  //×Ó½ÚµãÓÎÏ·ÎïÌå
-    private List<Route> routeList = new List<Route>();  //×ªÏò½Úµãlist
-    private GameObject preNode;  //Ç°Ò»½Ú³µÏáµÄÎïÌå
-    private Route route;  //×ªÏòĞÅÏ¢
-    private float distance;  //ÓëÇ°Ò»½Ú³µÏáµÄ¾àÀë
+    private GameObject train_head;  //ç«è½¦å¤´ç‰©ä½“
+    [SerializeField]private Vector2 moveDir;  //å½“å‰èŠ‚ç‚¹ç§»åŠ¨æ–¹å‘
+    private Rigidbody2D trainbody_RB;  //å½“å‰èŠ‚ç‚¹çš„åˆšä½“
+    private GameObject childNode;  //å­èŠ‚ç‚¹æ¸¸æˆç‰©ä½“
+    private List<Route> routeList = new List<Route>();  //è½¬å‘èŠ‚ç‚¹list
+    private GameObject preNode;  //å‰ä¸€èŠ‚è½¦å¢çš„ç‰©ä½“
+    private Route route;  //è½¬å‘ä¿¡æ¯
+    private float distance;  //ä¸å‰ä¸€èŠ‚è½¦å¢çš„è·ç¦»
 
-    public event Action onRouteSetted;  //·¢ËÍÂ·¾¶ĞÅÏ¢Ê±µÄÊÂ¼ş
+    public event Action onRouteSetted;  //å‘é€è·¯å¾„ä¿¡æ¯æ—¶çš„äº‹ä»¶
 
     void Start()
     {
-        childNode = this.transform.GetChild(0).gameObject;  //»ñÈ¡×Ó½ÚµãÓÎÏ·ÎïÌå
-        train_head = GameObject.Find("train_head");  //»ñÈ¡»ğ³µÎïÌå
+        childNode = this.transform.GetChild(0).gameObject;  //è·å–å­èŠ‚ç‚¹æ¸¸æˆç‰©ä½“
+        train_head = GameObject.Find("train_head");  //è·å–ç«è½¦ç‰©ä½“
 
-        if (this.id == 0)  //»ñÈ¡Ç°Ò»½ÚµãÎïÌå
+        if (this.id == 0)  //è·å–å‰ä¸€èŠ‚ç‚¹ç‰©ä½“
             preNode = train_head;
         else
             preNode = GameObject.Find("train_body" + (id - 1));
 
-        moveDir = train_head.GetComponent<TrainheadMov>().GetDir();  //»ñÈ¡µ±Ç°µÄ·½Ïò
-        trainbody_RB = this.GetComponent<Rigidbody2D>();  //»ñÈ¡¸ÕÌå
+        moveDir = train_head.GetComponent<TrainheadMov>().GetDir();  //è·å–å½“å‰çš„æ–¹å‘
+        trainbody_RB = this.GetComponent<Rigidbody2D>();  //è·å–åˆšä½“
 
-        if (this.id == 0)  //¶©ÔÄÉèÖÃÂ·¾¶ÊÂ¼ş
+        if (this.id == 0)  //è®¢é˜…è®¾ç½®è·¯å¾„äº‹ä»¶
             preNode.GetComponent<TrainheadMov>().onRouteSetted += this.RenewRouteList;
         else
             preNode.GetComponent<TrainBodyMov>().onRouteSetted += this.RenewRouteList;
 
-        this.distance = Vector2.Distance(preNode.transform.position, transform.position);  //¼ÆËãÓëÉÏÒ»½ÚµãµÄ¾àÀë
+        this.distance = Vector2.Distance(preNode.transform.position, transform.position);  //è®¡ç®—ä¸ä¸Šä¸€èŠ‚ç‚¹çš„è·ç¦»
     }
 
     private void FixedUpdate()
@@ -48,12 +48,12 @@ public class TrainBodyMov : TrainBody
         //RenewRoute();
     }
 
-    void MoveFunc()  //ÒÆ¶¯º¯Êı
+    void MoveFunc()  //ç§»åŠ¨å‡½æ•°
     {
         this.transform.position = Vector2.MoveTowards(transform.position,childNode.transform.position, train_head.GetComponent<TrainheadMov>().GetTrainSpeed()*Time.fixedDeltaTime);
     }
 
-    void RenewRouteList()  //¸üĞÂÂ·¾¶ÁĞ±í
+    void RenewRouteList()  //æ›´æ–°è·¯å¾„åˆ—è¡¨
     {
         Route tempRoute;
         if (this.id == 0)
@@ -68,7 +68,7 @@ public class TrainBodyMov : TrainBody
         return;
     }
 
-    void RenewRoute()  //¸üĞÂµ±Ç°½ÚµãµÄÂ·¾¶
+    void RenewRoute()  //æ›´æ–°å½“å‰èŠ‚ç‚¹çš„è·¯å¾„
     {
         if (routeList.Count() > 0)
         {
@@ -78,13 +78,13 @@ public class TrainBodyMov : TrainBody
             if(Vector2.Distance(tempPosition, transform.position) < 0.02f)
             {
                 this.moveDir = tempDir;
-                ChangeRotation(moveDir);  //¸Ä±äÍ¼Æ¬³¯Ïò
+                ChangeRotation(moveDir);  //æ”¹å˜å›¾ç‰‡æœå‘
                 this.transform.position = tempPosition;
-                this.SetRoute(new Route(this.transform.position, this.moveDir));  //ÉèÖÃ×ªÏòÊ±µÄĞÅÏ¢
+                this.SetRoute(new Route(this.transform.position, this.moveDir));  //è®¾ç½®è½¬å‘æ—¶çš„ä¿¡æ¯
                 routeList.RemoveAt(0);
                 if (Vector3.Distance(transform.position, preNode.transform.position) != distance)
                 {
-                    Debug.Log("µ÷ÕûÎ»ÖÃ");
+                    Debug.Log("è°ƒæ•´ä½ç½®");
                     transform.position = new Vector3(preNode.transform.position.x - distance * moveDir.x,
                                                      preNode.transform.position.y - distance * moveDir.y, 0);
                 }
@@ -96,38 +96,38 @@ public class TrainBodyMov : TrainBody
             MoveFunc();
     }
 
-    void ChangeRotation(Vector2 moveDir)  //¸Ä±ä³¯Ïòº¯Êı
+    void ChangeRotation(Vector2 moveDir)  //æ”¹å˜æœå‘å‡½æ•°
     {
         if (moveDir.Equals(new Vector2(0, 1)))
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);  //µ÷ÕûÍ¼ĞÎ½Ç¶È
+            transform.rotation = Quaternion.Euler(0, 0, 0);  //è°ƒæ•´å›¾å½¢è§’åº¦
             return;
         }
         if (moveDir.Equals(new Vector2(-1, 0)))
         {
-            transform.rotation = Quaternion.Euler(0, 0, 90);  //µ÷ÕûÍ¼ĞÎ½Ç¶È
+            transform.rotation = Quaternion.Euler(0, 0, 90);  //è°ƒæ•´å›¾å½¢è§’åº¦
             return;
         }
         if (moveDir.Equals(new Vector2(0, -1)))
         {
-            transform.rotation = Quaternion.Euler(0, 0, 180);  //µ÷ÕûÍ¼ĞÎ½Ç¶È
+            transform.rotation = Quaternion.Euler(0, 0, 180);  //è°ƒæ•´å›¾å½¢è§’åº¦
             return;
         }
         if (moveDir.Equals(new Vector2(1, 0)))
         {
-            transform.rotation = Quaternion.Euler(0, 0, -90);  //µ÷ÕûÍ¼ĞÎ½Ç¶È
+            transform.rotation = Quaternion.Euler(0, 0, -90);  //è°ƒæ•´å›¾å½¢è§’åº¦
             return;
         }
     }
 
-    public void SetRoute(Route new_route)  //route Set·½·¨
+    public void SetRoute(Route new_route)  //route Setæ–¹æ³•
     {
         this.route = new_route;
         if (this.id < TrainManager.GetInstance().GetTrainLength() - 2)
             this.onRouteSetted();
     }
 
-    public Route GetRoute()  //route Get·½·¨
+    public Route GetRoute()  //route Getæ–¹æ³•
     {
         return this.route;
     }
