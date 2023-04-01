@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ResourseGathering : TrainBody
 {
-    private float speed;  //列车是否在移动状态
+    private bool isMoving;  //是否在运动状态
+    private bool isDizzy;  //是否在晕眩状态
     private bool isInResoursePoint = false; //是否在资源点内
     private GameObject trainHead;  //火车头物体
     
@@ -12,13 +13,14 @@ public class ResourseGathering : TrainBody
     void Start()
     {
         trainHead = GameObject.Find("train_head");  //获取火车头物体
-        speed = trainHead.GetComponent<TrainheadMovement>().GetTrainSpeed();  //是否移动
+        isMoving = trainHead.GetComponent<TrainheadMov>().GetIsMoving();  //是否移动
+        isDizzy = trainHead.GetComponent<TrainheadMov>().GetIsDizzy();  //是否晕眩
     }
 
     // Update is called once per frame
     void Update()
     {
-        speed = trainHead.GetComponent<TrainheadMovement>().GetTrainSpeed();
+        isMoving = trainHead.GetComponent<TrainheadMov>().GetIsMoving();
         CollectResourse();
     }
 
@@ -40,7 +42,7 @@ public class ResourseGathering : TrainBody
 
     private void CollectResourse()  //采集资源
     {
-        if(speed.Equals(0) && isInResoursePoint)
+        if(!isMoving && isInResoursePoint && !isDizzy)
         {
             Debug.Log(id + " " + "资源采集中");
         }
