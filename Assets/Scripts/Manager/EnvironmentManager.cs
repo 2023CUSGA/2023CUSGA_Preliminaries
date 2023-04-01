@@ -22,15 +22,15 @@ public class EnvironmentManager : MonoBehaviour
 	
     public void Fog()
 	{
-		//FindObjectOfType<>	// 找到控制车头的脚本
+		TrainManager.GetInstance().SetIsPerversion(true);
 		StartCoroutine(WaitForFog(fogTime));
 	}
 
 	IEnumerator WaitForFog(float time)
 	{
 		yield return new WaitForSeconds(time);
-		// 传入控制脚本来恢复操控方式
-	}
+        TrainManager.GetInstance().SetIsPerversion(false);
+    }
 
     public void Rainning()
     {
