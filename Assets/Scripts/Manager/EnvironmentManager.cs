@@ -11,6 +11,7 @@ public class EnvironmentManager : MonoBehaviour
 	public float enemyTideTime;
     
     public List<EnemyBase> enemysList;
+    public List<EnemySpawner> spawnerList;
 	public float enemySpeedRatio;
 	public float enemyAtkRatio;
 
@@ -58,6 +59,11 @@ public class EnvironmentManager : MonoBehaviour
 			enemy.Decelerate(enemySpeedRatio);
 			enemy.AtkDown(enemyAtkRatio);
 		}
+
+        foreach (var item in spawnerList)
+        {
+            item.SpawnPrefab(5,6);
+        }
 
 		StartCoroutine(WaitForTide(enemyTideTime));
     }

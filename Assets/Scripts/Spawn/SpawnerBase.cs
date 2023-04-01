@@ -4,57 +4,25 @@ using UnityEngine;
 
 public class SpawnerBase : MonoBehaviour 
 {
-    [Header("Éú³ÉÊ±¼ä¼ä¸ô")] public int spawnSpace = 5;
-    [Header("Éú³ÉÊ±¼ä¸Ä±äµÄÊ±¼ä¼ä¸ô")] public int spawnDeltaSpace = 30;
-    private float timerOfSpace;
-    private float timerOfDeltaSpace;
 
-    [Header("Éú³ÉÎïÖÖÀà")] public GameObject[] spawnObjects;
-    [Header("µ±Ç°µÄÉú³É¸öÊı")] public int defualtSpawnCount = 5;
-    [Header("Ã¿´ÎÔö¼ÓµÄÉú³É¸öÊı")] public int deltaSpawnCount = 2;
+    [Header("ç”Ÿæˆç‰©ç§ç±»")] public GameObject[] spawnObjects;
+    [Header("å½“å‰çš„ç”Ÿæˆä¸ªæ•°")] public int defualtSpawnCount = 5;
 
-
-    public void ChangeSpawnCount()
+    private void Start()
     {
-        defualtSpawnCount += deltaSpawnCount;
+        EnvironmentManager.instance.spawnerList.Add((EnemySpawner)this);
     }
-    
-    public virtual void SpawnPrefab()
+
+    public virtual void SpawnPrefab(int regionLeft, int regionRight)
     {
-        for (int i = 0; i < defualtSpawnCount; i++)
+        int spawnCount = Random.Range(regionLeft, regionRight + 1);
+        for (int i = 0; i < spawnCount; i++)
         {
             int index = Random.Range(0, spawnObjects.Length);
 
             PoolManager.Release(spawnObjects[index], transform.position);
         }
     }
-
-
-
-    private void Update()
-    {
-        UpdateFunc();
-
-        if (timerOfDeltaSpace >= spawnDeltaSpace)   // ¸Ä±äË¢¹ÖµãµÄË¢¹ÖÊıÁ¿
-        {
-            timerOfDeltaSpace = 0;
-            ChangeSpawnCount();
-        }
-        timerOfDeltaSpace += Time.deltaTime;
-
-        if (timerOfSpace >= spawnSpace)     // Ë¢¹Ö
-        {
-            timerOfSpace = 0;
-            SpawnPrefab();
-        }
-        timerOfSpace += Time.deltaTime;
-    }
-
-    public virtual void UpdateFunc()
-    {
-
-    }
-
 
 
 }
