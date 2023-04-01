@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -21,7 +22,6 @@ public class DialogueManager : Singleton<DialogueManager>
     List<string> textList = new List<string>();
 
     bool textFinish = true;    // 检查当前句子是否显示完全
-    bool textAccelerate;    // 检查当前句子是否被加速看完
 
     [SerializeField]
     [Header("文字逐字出现的时间间隔")]
@@ -54,7 +54,7 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (index >= textList.Count || textList[index - 1].Contains("end")) // 对话结束
+            if (index >= textList.Count || textList[index].Contains("end")) // 对话结束
             {
                 dialogueBox.SetActive(false);
                 index = 0;
@@ -68,11 +68,11 @@ public class DialogueManager : Singleton<DialogueManager>
 
             if (textFinish && textList.Count != 0 && !isSelecting)  // 下一句话
             {
-                StartCoroutine(SetTextUI());
+                SetTextUI();
             }
             else
             {
-                textAccelerate = true;  // 对话没完成就再次按下对话键，则对话完全显示
+                conten.DOComplete(true);  // 对话没完成就再次按下对话键，则对话完全显示
             }
         }
     }
@@ -118,7 +118,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         StartCoroutine(FadeIn());
 
-        StartCoroutine(SetTextUI());
+        SetTextUI();
     }
 
     #endregion
@@ -143,10 +143,9 @@ public class DialogueManager : Singleton<DialogueManager>
     /// <summary>
     /// 文本框内容更新
     /// </summary>
-    IEnumerator SetTextUI()
+    void SetTextUI()
     {
         textFinish = false;
-        textAccelerate = false;
         conten.text = "";
 
         #region 立绘切换
@@ -157,9 +156,14 @@ public class DialogueManager : Singleton<DialogueManager>
                 imageLeft.sprite = avatar1;
                 index++;
                 break;
-            case "难民2：":
-                CharacterName.text = "难民2";
-                imageRight.sprite = avatar2;
+            case "Zoe：":
+                CharacterName.text = "Zoe";
+                imageLeft.sprite = avatar2;
+                index++;
+                break;
+            case "Clark：":
+                CharacterName.text = "Clark";
+                imageLeft.sprite = avatar3;
                 index++;
                 break;
             case "n":
@@ -169,57 +173,44 @@ public class DialogueManager : Singleton<DialogueManager>
         }
         #endregion
 
-
-        #region 文字效果
-        for (int i = 0; i < textList[index].Length; i++)
+        if (textList[index].StartsWith("@"))
         {
-            if (textList[index].StartsWith("@"))
-            {
-                string text1 = textList[index].Substring(3);
-                int text1Index = int.Parse(textList[index].Substring(1, 2));
-                index++;
+            string text1 = textList[index].Substring(3);
+            int text1Index = int.Parse(textList[index].Substring(1, 2));
+            index++;
 
-                string text2 = textList[index].Substring(3);
-                int text2Index = int.Parse(textList[index].Substring(1, 2));
-                index++;
+            string text2 = textList[index].Substring(3);
+            int text2Index = int.Parse(textList[index].Substring(1, 2));
+            index++;
 
-                string text3 = textList[index].Substring(3);
-                int text3Index = int.Parse(textList[index].Substring(1, 2));
+            string text3 = textList[index].Substring(3);
+            int text3Index = int.Parse(textList[index].Substring(1, 2));
 
-                UISelectWindow selectWindow = UIWindowManager.Instance.ShowSelectWindow(text1, text2, text3);   // 打开选择框
-                selectWindow.Action1 += () => { ContinueTalk(text1Index); };
-                selectWindow.Action2 += () => { ContinueTalk(text2Index); };
-                selectWindow.Action3 += () => { ContinueTalk(text3Index); };
+            UISelectWindow selectWindow = UIWindowManager.Instance.ShowSelectWindow(text1, text2, text3);   // 打开选择框
+            selectWindow.Action1 += () => { ContinueTalk(text1Index); };
+            selectWindow.Action2 += () => { ContinueTalk(text2Index); };
+            selectWindow.Action3 += () => { ContinueTalk(text3Index); };
 
-                isSelecting = true;
-                textFinish = true;
-
-                yield return null;
-            }
-            else
-            {
-                conten.text += textList[index][i];
-                yield return waitForSeconds;
-
-                if (textAccelerate == true)  // 如果中途再次按下对话键则显示全部内容
-                {
-                    conten.text = textList[index];
-                    break;
-                }
-            }
+            isSelecting = true;
         }
-        #endregion
+        else
+        {
+            conten.DOText(textList[index], 1f).SetEase(Ease.Linear).OnComplete(OnTextCompelete);
+        }
 
-        textFinish = true;
         index++;
     }
 
-    void ContinueTalk(int textIndex)
+    void ContinueTalk(int textIndex) 
     {
-        StopCoroutine(SetTextUI());
         index = textIndex - 1;
         isSelecting = false;
-        StartCoroutine(SetTextUI());
+        SetTextUI();
+    }
+
+    void OnTextCompelete()
+    {
+        textFinish = true;
     }
 }
 
