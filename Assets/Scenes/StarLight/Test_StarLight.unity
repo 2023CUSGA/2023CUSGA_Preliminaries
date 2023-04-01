@@ -532,6 +532,7 @@ MonoBehaviour:
   trainhead: {fileID: 6589500760651619008, guid: c2d6fc3a53bc90f4aaf16d20edaf5989, type: 3}
   trainbody: {fileID: 3489593314986615664, guid: 7b003f8524933c041bc7685c93ee24a1, type: 3}
   trainLength: 4
+  isPerversion: 0
 --- !u!4 &1612518294
 Transform:
   m_ObjectHideFlags: 0

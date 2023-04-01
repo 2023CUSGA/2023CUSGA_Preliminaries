@@ -89,29 +89,43 @@ public class TrainheadMov : MonoBehaviour
 
     void DirFunc()  //转向函数
     {
-        //trainhead_RB.SetRotation(Quaternion.Euler(0, 0, train_rotation));
-        if (Input.GetKeyDown(KeyCode.W) && moveDir.y != (-1))  //如果按下“w”键且火车方向不是向下
+        if (
+            ((Input.GetKeyDown(KeyCode.W) && !TrainManager.GetInstance().GetIsPerversion()) ||
+            (Input.GetKeyDown(KeyCode.S) && TrainManager.GetInstance().GetIsPerversion())) 
+            && moveDir.y != (-1))  //如果按下“w”键且火车方向不是向下
         {
             moveDir = new Vector2(0, 1);  //向上
             train_rotation = 0;  //转向
             this.SetRoute(new Route(transform.position, moveDir));  //设置转向时的信息
             transform.rotation = Quaternion.Euler(0, 0, train_rotation);  //调整图形角度
         }
-        if (Input.GetKeyDown(KeyCode.A) && moveDir.x != 1)
+
+        if (
+            ((Input.GetKeyDown(KeyCode.A) && !TrainManager.GetInstance().GetIsPerversion()) ||
+            (Input.GetKeyDown(KeyCode.D) && TrainManager.GetInstance().GetIsPerversion()))
+            && moveDir.x != 1)
         {
             moveDir = new Vector2(-1, 0);  //向左
             train_rotation = 90;  //转向
             this.SetRoute(new Route(transform.position, moveDir));  //设置转向时的信息
             transform.rotation = Quaternion.Euler(0, 0, train_rotation);  //调整图形角度
         }
-        if (Input.GetKeyDown(KeyCode.S) && moveDir.y != 1)
+
+        if (
+            ((Input.GetKeyDown(KeyCode.S) && !TrainManager.GetInstance().GetIsPerversion()) ||
+            (Input.GetKeyDown(KeyCode.W) && TrainManager.GetInstance().GetIsPerversion()))
+            && moveDir.y != 1)
         {
             moveDir = new Vector2(0, -1);  //向下
             train_rotation = 180;  //转向
             this.SetRoute(new Route(transform.position, moveDir));  //设置转向时的信息
             transform.rotation = Quaternion.Euler(0, 0, train_rotation);  //调整图形角度
         }
-        if (Input.GetKeyDown(KeyCode.D) && moveDir.x != (-1))
+
+        if (
+            ((Input.GetKeyDown(KeyCode.D) && !TrainManager.GetInstance().GetIsPerversion()) ||
+            (Input.GetKeyDown(KeyCode.A) && TrainManager.GetInstance().GetIsPerversion()))
+            && moveDir.x != (-1))
         {
             moveDir = new Vector2(1, 0);  //向后
             train_rotation = -90;  //转向

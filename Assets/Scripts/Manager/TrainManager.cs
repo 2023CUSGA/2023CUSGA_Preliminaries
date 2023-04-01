@@ -9,6 +9,7 @@ public class TrainManager : MonoBehaviour
     public GameObject trainhead;  //火车头预制体
     public GameObject trainbody;  //火车身预制体
     [SerializeField]private int trainLength;  //火车长度
+    [SerializeField]private bool isPerversion = false;  //火车操控方向是否颠倒
 
     private void Awake()
     {
@@ -29,6 +30,16 @@ public class TrainManager : MonoBehaviour
     public void SetTrainLength(int length)  //trainLength Set方法
     {
         this.trainLength = length;
+    }
+
+    public void SetIsPerversion(bool isPerversion)  //isPerversion Set方法
+    {
+        this.isPerversion = isPerversion;
+    }
+
+    public bool GetIsPerversion()  //isPerversion Get方法
+    {
+        return this.isPerversion;
     }
 
     void initTrain()  //初始化火车
