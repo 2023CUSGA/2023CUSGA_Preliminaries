@@ -54,7 +54,8 @@ public class TrainheadMov : MonoBehaviour
             else  //不能运动的情况：即仍然撞在障碍物上
             {
                 isMoving = false;
-                DizzyFunc();
+                if(!isDizzy)
+                    DizzyFunc();
             }
         }
     }
@@ -158,6 +159,10 @@ public class TrainheadMov : MonoBehaviour
             this.trainSpeed = 0;
             trainhead_RB.velocity = moveDir * trainSpeed;
             DizzyFunc();  //晕眩函数
+        }
+        if(collision.gameObject.tag=="enemy")
+        {
+            Debug.Log("撞击敌人");
         }
     }
 
