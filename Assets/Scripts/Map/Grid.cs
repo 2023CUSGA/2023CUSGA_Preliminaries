@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 public enum WorldObject
 {
@@ -25,6 +26,7 @@ public class Grid
     public GameObject Obstacle1;
     public GameObject Obstacle2;
     public GameObject Obstacle3;
+    public GameObject ResPoint;
 
     public Grid(int width, int height, float cellSize, Transform owner)
     {
@@ -41,22 +43,27 @@ public class Grid
             for (int y = 0; y < height; y++)
             {
                 gridArry[x, y] = WorldObject.None;
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 10f);   // 画线
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 10f);
             }
         }
-        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 10f);
+        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 10f);
     }
 
-    Vector3 GetWorldPosition(int x, int y) => new Vector3(x, y) * cellSize;
+    public Vector3 GetWorldPosition(int x, int y) => new Vector3(x, y) * cellSize;
     
-    public void ShowGridInfo(GameObject obstacle1, GameObject obstacle2, GameObject obstacle3)
+    public void ShowGridInfo(GameObject obstacle1, GameObject obstacle2, GameObject obstacle3, GameObject ResPoint)
     {
         this.Obstacle1 = obstacle1;
         this.Obstacle2 = obstacle2;
         this.Obstacle3 = obstacle3;
+        this.ResPoint = ResPoint;
 
+        foreach (var item in objList)
+        {
+            item.SetActive(false);
+        }
         objList.Clear();
         for (int x = 0; x < width; x++)
         {
@@ -92,8 +99,8 @@ public class Grid
     }
     public WorldObject[] Shuffle()
     {
-        WorldObject[] worldObjects = new WorldObject[100];
-        for (int i = 0; i < 100; i++)
+        WorldObject[] worldObjects = new WorldObject[375];
+        for (int i = 0; i < 375; i++)
         {
             if (i < 2)
             {
@@ -123,38 +130,38 @@ public class Grid
             worldObjects[index] = temp;
         }
 
-        return worldObjects;
+        return worldObjects;    // 返回一组洗好的牌
     }
 
 
     void CreateResPoint(int i)
     {
-        int x = i / width;
-        int y = i % height;
+        int y = i / width;
+        int x = i - y * width;
         if (gridArry[x, y] == WorldObject.None)
         {
             gridArry[x, y] = WorldObject.ResourcePoint;
-            Utils.CreateWorldText("Res", owner, GetWorldPosition(x, y) + offsest * 0.5f, 30, objList,Color.yellow, TextAnchor.MiddleCenter);
-            
+            objList.Add(PoolManager.Release(ResPoint, GetWorldPosition(x, y)));
         }
     }
     void CreateObstacle1(int i)
     {
-        int x = i / width;
-        int y = i % height;
+        int y = i / width;
+        int x = i - y * width;
+
         if (gridArry[x, y] == WorldObject.None)
         {
             gridArry[x, y] = WorldObject.Obstacle1;
-            //Utils.CreateWorldText("1", owner, GetWorldPosition(x, y) + offsest * 0.5f, 30, objList, Color.white, TextAnchor.MiddleCenter);
-            PoolManager.Release(Obstacle1, GetWorldPosition(x, y));
+            objList.Add(PoolManager.Release(Obstacle1, GetWorldPosition(x, y)));
         }
     }
     void CreateObstacle2(int i)
     {
-        int x1 = i / width;
-        int x2 = x1 +1;
-        int y1 = i % height;
-        int y2 = y1 + 1;
+        int y1 = i / width;
+        int y2 = y1 +1;
+        int x1 = i - y1 * width;
+
+        int x2 = y1 + 1;
         if (x1 > width - 2 || y1 > height - 2)
         {
             return;
@@ -165,22 +172,19 @@ public class Grid
             gridArry[x1, y2] = WorldObject.Obstacle2;
             gridArry[x2, y1] = WorldObject.Obstacle2;
             gridArry[x2, y2] = WorldObject.Obstacle2;
-            //Utils.CreateWorldText("2", owner, GetWorldPosition(x1, y1) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("2", owner, GetWorldPosition(x1, y2) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("2", owner, GetWorldPosition(x2, y1) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("2", owner, GetWorldPosition(x2, y2) + offsest * 0.5f, 30, objList, Color.red, TextAnchor.MiddleCenter);
-            PoolManager.Release(Obstacle2, GetWorldPosition(x1, y1));
+            objList.Add(PoolManager.Release(Obstacle2, GetWorldPosition(x1, y1)));
 
         }
     }
     void CreateObstacle3(int i)
     {
-        int x1 = i / width;
-        int x2 = x1 + 1;
-        int x3 = x2 + 1;
-        int y1 = i % height;
+        int y1 = i / width;
         int y2 = y1 + 1;
         int y3 = y2 + 1;
+        int x1 = i - y1 * width;
+
+        int x2 = x1 + 1;
+        int x3 = x2 + 1;
         if (x1 > width - 3 || y1 > height - 3)
         {
             return;
@@ -196,16 +200,7 @@ public class Grid
             gridArry[x3, y1] = WorldObject.Obstacle3;
             gridArry[x3, y2] = WorldObject.Obstacle3;
             gridArry[x3, y3] = WorldObject.Obstacle3;
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x1, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x2, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y1) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y2) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            //Utils.CreateWorldText("3", owner, GetWorldPosition(x3, y3) + offsest * 0.5f, 30, objList, Color.green, TextAnchor.MiddleCenter);
-            PoolManager.Release(Obstacle3, GetWorldPosition(x1, y1));
+            objList.Add(PoolManager.Release(Obstacle3, GetWorldPosition(x1, y1)));
         }
     }
 

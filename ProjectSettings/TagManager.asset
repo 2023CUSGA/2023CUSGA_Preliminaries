@@ -9,6 +9,7 @@ TagManager:
   - RoadBlock
   - ResoursePoint
   - AttackObject
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -8,7 +8,7 @@ public class PoolManager : MonoBehaviour
 
     static Dictionary<GameObject, Pool> poolDic;
 
-    private void Start()
+    private void Awake()
     {
         poolDic = new Dictionary<GameObject, Pool>();
         Initialize(pools);
