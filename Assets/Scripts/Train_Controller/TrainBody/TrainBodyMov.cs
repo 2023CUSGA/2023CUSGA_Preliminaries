@@ -84,7 +84,7 @@ public class TrainBodyMov : TrainBody
                 routeList.RemoveAt(0);
                 if (Vector3.Distance(transform.position, preNode.transform.position) != distance)
                 {
-                    Debug.Log("调整位置");
+                    //Debug.Log("调整位置");
                     transform.position = new Vector3(preNode.transform.position.x - distance * moveDir.x,
                                                      preNode.transform.position.y - distance * moveDir.y, 0);
                 }

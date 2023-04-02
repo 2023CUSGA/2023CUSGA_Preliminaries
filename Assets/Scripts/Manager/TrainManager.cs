@@ -13,6 +13,7 @@ public class TrainManager : MonoBehaviour
     [SerializeField]private int trainLength;  //火车长度
     private bool isPerversion = false;  //火车操控方向是否颠倒
     private bool isUpdated = false;  //火车头是否经过升级
+    [SerializeField]private int trainHeadType = 0;  //火车头类型 0.普通 1.重装 2.弹力 3.迅捷
 
     private void Awake()
     {
@@ -76,6 +77,11 @@ public class TrainManager : MonoBehaviour
         return this.energy;
     }
 
+    public void SetEnergy(int i)  //energy Set方法
+    {
+        this.energy = i;
+    }
+
     public void AddEnergy(int i=1)  //增加能量
     {
         if(energy == 0)
@@ -106,23 +112,40 @@ public class TrainManager : MonoBehaviour
         }
     }
 
-    private void UpdateTrainHead()
+    private void UpdateTrainHead()  //火车头升级
     {
         Debug.Log("火车头升级");
-    }  //火车头升级
+    }  
 
-    private void DownGradeTrainHead()
+    private void DownGradeTrainHead()  //火车头降级
     {
-        Debug.Log("火车头降级");
-    }  //火车头降级
+        trainHeadType = 0;
+    }
+
+    public void SetTrainHeadType(int i)  //trainHeadType Set方法
+    {
+        if (0 <= i && i <= 3)
+            this.trainHeadType = i;
+        else
+            Debug.Log("trainHeadType Error: 0.普通 1.重装 2.弹力 3.迅捷");
+    }
+
+    public int GetTrainHeadType()  //trainHeadType Get方法
+    {
+        return this.trainHeadType;
+    }
 
     IEnumerator EnergyLeak()  //每秒流失能量函数
     {
-        timeCount_CrashEnermy += 1;
-        if(timeCount_CrashEnermy>=3 && energy>=0)
+        while(true)
         {
-            ReduceEnergy(1);
+            timeCount_CrashEnermy += 1;
+            Debug.Log(timeCount_CrashEnermy);
+            if (timeCount_CrashEnermy > 3 && energy >= 0)
+            {
+                ReduceEnergy(1);
+            }
+            yield return new WaitForSeconds(1);
         }
-        yield return new WaitForSeconds(1);
     }
 }

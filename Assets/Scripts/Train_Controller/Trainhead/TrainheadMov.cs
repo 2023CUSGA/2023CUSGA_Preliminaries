@@ -147,7 +147,7 @@ public class TrainheadMov : MonoBehaviour
     public void SetRoute(Route new_route)  //route Set方法
     {
         this.route = new_route;
-        Debug.Log("Route: " + new_route.GetCurrentPosition());
+        //Debug.Log("Route: " + new_route.GetCurrentPosition());
         this.onRouteSetted();
     }
 
@@ -161,7 +161,7 @@ public class TrainheadMov : MonoBehaviour
         return this.isMoving;
     }
 
-    public bool GetIsDizzy()
+    public bool GetIsDizzy() //isDezzy Get方法
     {
         return this.isDizzy;
     }
@@ -174,10 +174,29 @@ public class TrainheadMov : MonoBehaviour
             trainhead_RB.velocity = moveDir * trainSpeed;
             DizzyFunc();  //晕眩函数
         }
-        if(collision.gameObject.tag=="enemy")
+        if(collision.gameObject.tag=="Enemy")  //撞击敌人
         {
             TrainManager.GetInstance().OnCrashEnermy();
-            Debug.Log("撞击敌人");
+            int i = TrainManager.GetInstance().GetTrainHeadType();
+            EnemyBase enemyBaseTemp = collision.gameObject.GetComponent<EnemyBase>();
+            switch (i)   //各个车头的模式
+            {
+                case 0:
+                    enemyBaseTemp.Repulsed(60);
+                    break;
+                case 1:
+                    enemyBaseTemp.Hurt(1000000);
+                    break;
+                case 2:
+                    enemyBaseTemp.Repulsed(90);
+                    enemyBaseTemp.Hurt(5);
+                    break;
+                case 3:
+                    enemyBaseTemp.Repulsed(60);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

@@ -150,6 +150,8 @@ MonoBehaviour:
   moveSpeed: 3
   accelerateedSpeed: 1
   trainhead_RB: {fileID: 0}
+  isDizzy: 0
+  canMove: 1
 --- !u!1 &7105957222135516960
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +164,7 @@ GameObject:
   m_Layer: 0
   m_Name: wayPoint
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
