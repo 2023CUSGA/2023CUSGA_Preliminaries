@@ -100,12 +100,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c9d1b0f12b8894cad6c1b6b36360df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 0.25
   maxHp: 40
   defaultAtk: 3
   defaultSpeed: 1
   checkStatusTime: 1
   smoothTime: 0.5
+  pathPoints: []
   isChaos: 0
 --- !u!61 &97540413866400964
 BoxCollider2D:
@@ -216,3 +217,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTrain: {fileID: 0}
+  timer: 0
+  waitTimer: 1

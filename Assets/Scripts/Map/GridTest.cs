@@ -16,7 +16,8 @@ public class GridTest : MonoBehaviour
     private void Start()
     {
         grid = new Grid(25, 15, 1f, this.transform);
-        SpawnEnemy();
+        PathFindingManager.instance.gridArry = PathFindingArray(grid.gridArry);
+        //SpawnEnemy();
     }
 
     public void ClickShuffleButton()
@@ -39,7 +40,51 @@ public class GridTest : MonoBehaviour
         }
     }
 
+    int[,] PathFindingArray(WorldObject[,] gridArry)
+    {
+        int[,] pathArray = new int[gridArry.GetLength(0), gridArry.GetLength(1)];
 
+        for (int i = 0; i < gridArry.GetLength(0); i++)
+        {
+            for (int j = 0; j < gridArry.GetLength(1); j++)
+            {
+                if (gridArry[i, j] == WorldObject.None && pathArray[i, j] != 2)
+                    pathArray[i, j] = 1;    // 代表可达
+
+                if (gridArry[i, j] == WorldObject.ResourcePoint || gridArry[i, j] == WorldObject.Obstacle1)
+                {
+                    pathArray[i, j] = 2;    // 代表不可达
+                    pathArray[i + 1, j] = 2;
+                    pathArray[i, j + 1] = 2;
+                    pathArray[i + 1, j + 1] = 2;
+                }
+
+                if (gridArry[i, j] == WorldObject.Obstacle2)
+                {
+                    for (int k = i; k < i + 3; k++)
+                    {
+                        for (int l = j; l < j + 3; l++)
+                        {
+                            pathArray[k, l] = 2;    // 代表不可达
+                        }
+                    }
+                }
+
+                if (gridArry[i, j] == WorldObject.Obstacle3)
+                {
+                    for (int k = i; k < i + 4; k++)
+                    {
+                        for (int l = j; l < j + 4; l++)
+                        {
+                            pathArray[k, l] = 2;    // 代表不可达
+                        }
+                    }
+                }
+            }
+        }
+        return pathArray;
+
+    }
 
 
 
