@@ -17,7 +17,7 @@ public class GridTest : MonoBehaviour
     {
         grid = new Grid(25, 15, 1f, this.transform);
         PathFindingManager.instance.gridArry = PathFindingArray(grid.gridArry);
-        //SpawnEnemy();
+        SpawnEnemy();
     }
 
     public void ClickShuffleButton()
