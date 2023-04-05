@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class AttackPart_Arrow : AttackPartBase
 {
-    [Header("弓箭预制体")]
-    [SerializeField]
     private GameObject prefeb;
+
+    private void Start()
+    {
+        prefeb = prefebs[0];
+    }
 
     protected override void Attack()
     {

@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spike_Timer : MonoBehaviour
 {
-    [Header("´æÔÚÊ±¼ä")]
+    [Header("å­˜åœ¨æ—¶é—´")]
     [SerializeField]
     private float time;
 

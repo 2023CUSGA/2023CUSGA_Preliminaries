@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class AttackPart_Spike : AttackPartBase
 {
-    [Header("地刺预制体")]
-    [SerializeField]
     private GameObject prefeb;
+
+    private void Start()
+    {
+        prefeb = prefebs[0];
+    }
 
     protected override void Attack()
     {

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class AttackPart_StoneBullet : AttackPartBase
 {
-    [Header("石弹预制体")]
-    [SerializeField]
     private GameObject prefeb;
-    [Header("有击退buff的石弹预制体")]
-    [SerializeField]
     private GameObject prefeb_buff;
+
+    private void Start()
+    {
+        prefeb = prefebs[0];
+        prefeb_buff = prefebs[1];
+    }
 
     protected override void Attack()
     {
