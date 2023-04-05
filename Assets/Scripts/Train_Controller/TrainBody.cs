@@ -1,45 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
+using System.Xml.Serialization;
 using UnityEngine;
 
-public class TrainPart : MonoBehaviour
+//车厢数据
+public class TrainBody : MonoBehaviour
 {
-    //如何获取hp和id？
-    /*
-    private float hp;
-    public float GetHP() => hp;
-    public void SetHP(float hp) { this.hp = hp; }
-    public void HurtHP(float damage)
-    {
-        hp -= damage;
-        if (hp <= 0)
-        {
-            hp = 0;
-            DisableAllParts();
-            this.enabled = false;
-        }
-    }
-    */
-
+    //车厢序号
     private int id;
-    private List<PartBase> trainParts;
-    public void DisableAllParts()
-    {
-        foreach(PartBase trainPart in trainParts)
+    public int GetId() => id;
+    public void SetId(int id) { this.id = id; }
+
+    //车厢HP
+    private float health;
+    private bool dead;
+    public float GetHealth() => health;
+    /// <summary>
+    /// 设定车厢血量(初始化用，造成伤害用DecreaseHealth)
+    /// </summary>
+    /// <param name="health"></param>
+    public void SetHealth(float health) {  this.health = health; }
+    /// <summary>
+    /// 减少车厢血量(造成伤害用)
+    /// </summary>
+    /// <param name="damage"></param>
+    public void DecreaseHealth(float damage)
+    { 
+        if (!dead)
         {
-            trainPart.enabled = false;
+            health -= damage;
+            if(health <= 0)
+            {
+                health = 0;
+                DisableAllParts();
+                dead = true;
+            }
         }
     }
 
-    private void Start()
+    //车厢配件
+    private List<PartBase> trainParts;
+    /// <summary>
+    /// 从TrainPartDataContainer中读取并实例化配件
+    /// </summary>
+    private void LoadParts()
     {
         trainParts = new List<PartBase>();
         List<PartNames> parts = TrainPartDataContainer.GetTrainPart(id);
-        foreach(PartNames name in parts)
+        foreach (PartNames name in parts)
         {
-            switch(name)
+            switch (name)
             {
                 case PartNames.弓弩:
                     {
@@ -127,8 +137,31 @@ public class TrainPart : MonoBehaviour
                         //add
                         break;
                     }
-                default:break;
+                default: break;
             }
         }
+    }
+    /// <summary>
+    /// 使所有车厢配件无效化
+    /// </summary>
+    public void DisableAllParts()
+    {
+        foreach (PartBase trainPart in trainParts)
+        {
+            trainPart.enabled = false;
+        }
+    }
+
+    //资源采集速度
+    private float gatheringSpeed;
+    public float GetGatheringSpeed() => gatheringSpeed;
+    public void SetGatheringSpeed(float speed) { gatheringSpeed = speed; }
+
+    private void Start()
+    {
+
+        //TODO:初始化车厢血量和资源采集速度
+
+        LoadParts();
     }
 }

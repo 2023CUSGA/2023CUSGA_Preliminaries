@@ -58,12 +58,9 @@ public class TrainManager : MonoBehaviour
                 nodeDistance -= 0.55f;
             else
                 nodeDistance -= 0.57f;
-            Instantiate(trainbody, new Vector3(0, nodeDistance, 0), Quaternion.identity).name = "train_body"+i.ToString();
-            TrainBody[] array = GameObject.Find("train_body" + i.ToString()).GetComponents<TrainBody>();
-            foreach (var p in array)
-            {
-                p.SetId(i);
-            }
+            GameObject temp = Instantiate(trainbody, new Vector3(0, nodeDistance, 0), Quaternion.identity);
+            temp.name = "train_body" + i.ToString();
+            temp.GetComponent<TrainBody>().SetId(i);
         }
     }
 

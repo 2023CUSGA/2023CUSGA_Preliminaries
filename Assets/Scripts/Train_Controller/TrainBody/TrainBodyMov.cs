@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TrainBodyMov : TrainBody
+public class TrainBodyMov : MonoBehaviour
 {
     private GameObject train_head;  //火车头物体
+    private int id; //车厢id
     [SerializeField]private Vector2 moveDir;  //当前节点移动方向
     private Rigidbody2D trainbody_RB;  //当前节点的刚体
     private GameObject childNode;  //子节点游戏物体
@@ -19,6 +20,7 @@ public class TrainBodyMov : TrainBody
 
     void Start()
     {
+        id = gameObject.GetComponent<TrainBody>().GetId();
         childNode = this.transform.GetChild(0).gameObject;  //获取子节点游戏物体
         train_head = GameObject.Find("train_head");  //获取火车物体
 
