@@ -62,6 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTrain: {fileID: 0}
+  timer: 0
+  waitTimer: 1
 --- !u!1 &7975251878980787965
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,12 +164,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee506c6f0d586c4ea35f0b390f8f613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
+  moveSpeed: 1.5
   maxHp: 20
   defaultAtk: 3
   defaultSpeed: 6
   checkStatusTime: 1
   smoothTime: 0.5
+  pathPoints: []
   isChaos: 0
 --- !u!61 &7006567087341955835
 BoxCollider2D:

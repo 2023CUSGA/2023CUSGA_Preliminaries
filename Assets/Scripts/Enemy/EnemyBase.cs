@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyBase : EntityBase
 {
@@ -28,6 +24,10 @@ public class EnemyBase : EntityBase
     BuffManager buffManager;
 
     Rigidbody2D rb;
+
+    public List<Vector3> pathPoints = new List<Vector3>();
+    int pathListIndex;
+    Vector3 direction;
 
     /// <summary>
     /// 初始化
@@ -56,8 +56,9 @@ public class EnemyBase : EntityBase
     public void Move(Vector3 targetPosition)
     {
         if (isChaos) return;
+        #region 弃用的移动方法
         ////获取目标的当前位置
-        //Vector3 endPos = target.transform.position;
+        //Vector3 endPos = targetPosition;
 
         ////计算每帧的时间增量
         //float moveTime = Time.deltaTime;
@@ -68,7 +69,58 @@ public class EnemyBase : EntityBase
         ////使用Lerp函数插值计算位置
         //transform.position = Vector3.Lerp(this.transform.position, endPos, percent);
 
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, moveSpeed);
+        //transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, moveSpeed); 
+        #endregion
+
+        if (pathPoints.Count > 0)
+        {
+            // 开始向下个路径点位移
+            transform.position += direction.normalized * moveSpeed * Time.deltaTime;
+            // 如果到达下一个路径点
+            if (Vector3.Distance(new Vector3(pathPoints[pathListIndex].x, pathPoints[pathListIndex].y), gameObject.transform.position) <= 0.1f)
+            {
+                pathListIndex++;
+                if (pathPoints.Count <= pathListIndex)      // 如果没有下个路径点了
+                {
+                    pathPoints.Clear();
+                    pathListIndex = 0;
+                }
+                else
+                {
+                    //计算下个路径点行走方向
+                    direction = new Vector3(pathPoints[pathListIndex].x, pathPoints[pathListIndex].y) - transform.position;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 重新计算路径
+    /// </summary>
+    public void RePathFinding(Transform targetTrain)
+    {
+        pathPoints.Clear();
+        pathListIndex = 0;
+        // 获取路径
+        pathPoints = PathFinding(PathFindingManager.instance.IAStar(this, transform.position, targetTrain.transform.position));
+        if (pathPoints.Count > 0)   // 计算初始行走方向
+        {
+            direction = new Vector3(pathPoints[0].x, pathPoints[0].y) - transform.position;
+        }
+    }
+    /// <summary>
+    /// 将路径转成列表
+    /// </summary>
+    List<Vector3> PathFinding(Stack<Vector3Int> trace)
+    {
+        List<Vector3> pathPoints = new List<Vector3>();
+        if (trace == null) return pathPoints;
+
+        while (trace.Count > 0)
+        {
+            pathPoints.Add(trace.Pop());
+        }
+        return pathPoints;
     }
 
     public override void TouchEvent(Collider2D collision)

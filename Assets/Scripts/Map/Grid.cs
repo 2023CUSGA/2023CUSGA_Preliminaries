@@ -16,7 +16,7 @@ public class Grid
     int width;
     int height;
     float cellSize;
-    WorldObject[,] gridArry;
+    public WorldObject[,] gridArry;
     Vector3 offsest;
     Transform owner;
     List<GameObject> objList = new List<GameObject>();
