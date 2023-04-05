@@ -9,11 +9,12 @@ public class TrainManager : MonoBehaviour
     public GameObject trainhead;  //火车头预制体
     public GameObject trainbody;  //火车身预制体
     private int energy = 0;  //火车头能量
-    private float timeCount_CrashEnermy = 0;
+    [SerializeField]private float timeCount_CrashEnermy = 0;
     [SerializeField]private int trainLength;  //火车长度
     private bool isPerversion = false;  //火车操控方向是否颠倒
     private bool isUpdated = false;  //火车头是否经过升级
     [SerializeField]private int trainHeadType = 0;  //火车头类型 0.普通 1.重装 2.弹力 3.迅捷
+    private Coroutine energyLeakCoro;  //能量流失协程函数
 
     private void Awake()
     {
@@ -86,7 +87,8 @@ public class TrainManager : MonoBehaviour
     {
         if(energy == 0)
         {
-            StartCoroutine(EnergyLeak());
+            timeCount_CrashEnermy = 0;
+            energyLeakCoro =  StartCoroutine(EnergyLeak());
         }
         if(energy<100) energy+=i;
         if(energy>=80 && !isUpdated)
@@ -102,7 +104,7 @@ public class TrainManager : MonoBehaviour
         else energy -= i;
         if(energy == 0)
         {
-            StopCoroutine(EnergyLeak());
+            StopCoroutine(energyLeakCoro);
             timeCount_CrashEnermy = 0;
         }
         if(energy<80 && isUpdated)
