@@ -166,6 +166,16 @@ public class TrainheadMov : MonoBehaviour
         return this.isDizzy;
     }
 
+    public float GetMoveSpeed()  //moveSpeed Get方法
+    {
+        return this.moveSpeed;
+    }
+
+    public void SetMoveSpeed(float new_moveSpeed)  //moveSpeed Set方法
+    {
+        this.moveSpeed = new_moveSpeed;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)  //碰撞检测函数
     {
         if (collision.gameObject.tag == "RoadBlock" || collision.gameObject.tag == "ResoursePoint" || collision.gameObject.tag == "TrianBody")
@@ -182,17 +192,17 @@ public class TrainheadMov : MonoBehaviour
             switch (i)   //各个车头的模式
             {
                 case 0:
-                    enemyBaseTemp.Repulsed(60);
+                    //enemyBaseTemp.Repulsed(30);
                     break;
                 case 1:
-                    enemyBaseTemp.Hurt(1000000);
+                    //enemyBaseTemp.Hurt(1000000);
                     break;
                 case 2:
-                    enemyBaseTemp.Repulsed(90);
-                    enemyBaseTemp.Hurt(5);
+                    //enemyBaseTemp.Repulsed(60);
+                    //enemyBaseTemp.Hurt(5);
                     break;
                 case 3:
-                    enemyBaseTemp.Repulsed(60);
+                    //enemyBaseTemp.Repulsed(30);
                     break;
                 default:
                     break;
@@ -221,7 +231,7 @@ public class TrainheadMov : MonoBehaviour
         StartCoroutine(DizzyFor3Second());
     }
 
-    IEnumerator DizzyFor3Second()
+    IEnumerator DizzyFor3Second()  //晕眩3秒计时器
     {
         int seconds = 0;
         while(true)

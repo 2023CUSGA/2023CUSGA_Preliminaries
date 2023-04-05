@@ -88,7 +88,7 @@ public class TrainManager : MonoBehaviour
         {
             StartCoroutine(EnergyLeak());
         }
-        energy+=i;
+        if(energy<100) energy+=i;
         if(energy>=80 && !isUpdated)
         {
             isUpdated = true;
@@ -119,6 +119,7 @@ public class TrainManager : MonoBehaviour
 
     private void DownGradeTrainHead()  //火车头降级
     {
+        Debug.Log("火车头降级");
         trainHeadType = 0;
     }
 
@@ -140,7 +141,6 @@ public class TrainManager : MonoBehaviour
         while(true)
         {
             timeCount_CrashEnermy += 1;
-            Debug.Log(timeCount_CrashEnermy);
             if (timeCount_CrashEnermy > 3 && energy >= 0)
             {
                 ReduceEnergy(1);
