@@ -17,9 +17,17 @@ public class Trap : AttackObjectBase
     private List<EnemyBase> enemies;
     private float t;
 
-    private void Start()
+    private void OnEnable()
     {
-        enemies = new List<EnemyBase>();
+        t = 0;
+        if (enemies == null)
+        {
+            enemies = new List<EnemyBase>();
+        }
+        else
+        {
+            enemies.Clear();
+        }
     }
 
     private void Update()
@@ -33,7 +41,7 @@ public class Trap : AttackObjectBase
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
+        EnemyBase enemy = GetEnemy(collision);
         if (enemy != null)
         {
             Attack(enemy);

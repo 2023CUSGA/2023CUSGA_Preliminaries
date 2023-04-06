@@ -1,26 +1,26 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourseGathering : TrainBody
+public class ResourseGathering : MonoBehaviour
 {
-    private bool isMoving;  //ÊÇ·ñÔÚÔË¶¯×´Ì¬
-    private bool isDizzy;  //ÊÇ·ñÔÚÔÎÑ£×´Ì¬
-    private bool isInResoursePoint = false; //ÊÇ·ñÔÚ×ÊÔ´µãÄÚ
-    private GameObject trainHead;  //»ğ³µÍ·ÎïÌå
-    
+    private bool isMoving;  //æ˜¯å¦åœ¨è¿åŠ¨çŠ¶æ€
+    private bool isDizzy;  //æ˜¯å¦åœ¨æ™•çœ©çŠ¶æ€
+    private bool isInResoursePoint = false; //æ˜¯å¦åœ¨èµ„æºç‚¹å†…
+    private TrainheadMov trainHead; //ç«è½¦å¤´è¿åŠ¨è„šæœ¬
+
     // Start is called before the first frame update
     void Start()
     {
-        trainHead = GameObject.Find("train_head");  //»ñÈ¡»ğ³µÍ·ÎïÌå
-        isMoving = trainHead.GetComponent<TrainheadMov>().GetIsMoving();  //ÊÇ·ñÒÆ¶¯
-        isDizzy = trainHead.GetComponent<TrainheadMov>().GetIsDizzy();  //ÊÇ·ñÔÎÑ£
+        trainHead = GameObject.Find("train_head").GetComponent<TrainheadMov>();  //è·å–ç«è½¦å¤´è¿åŠ¨è„šæœ¬
+        isMoving = trainHead.GetIsMoving();  //æ˜¯å¦ç§»åŠ¨
+        isDizzy = trainHead.GetIsDizzy();  //æ˜¯å¦æ™•çœ©
     }
 
     // Update is called once per frame
     void Update()
     {
-        isMoving = trainHead.GetComponent<TrainheadMov>().GetIsMoving();
+        isMoving = trainHead.GetIsMoving();
         CollectResourse();
     }
 
@@ -40,11 +40,11 @@ public class ResourseGathering : TrainBody
         }
     }
 
-    private void CollectResourse()  //²É¼¯×ÊÔ´
+    private void CollectResourse()  //é‡‡é›†èµ„æº
     {
         if(!isMoving && isInResoursePoint && !isDizzy)
         {
-            Debug.Log(id + " " + "×ÊÔ´²É¼¯ÖĞ");
+            Debug.Log("èµ„æºé‡‡é›†ä¸­");
         }
     }
 }

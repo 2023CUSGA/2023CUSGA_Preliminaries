@@ -11,7 +11,7 @@ public class Bomb_EnemyScanner : MonoBehaviour
         bomb = transform.parent.GetComponent<Bomb>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         EnemyBase enemy = bomb.GetEnemy(collision);
         if (enemy != null)
@@ -20,7 +20,7 @@ public class Bomb_EnemyScanner : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         EnemyBase enemy = bomb.GetEnemy(collision);
         if (enemy != null)

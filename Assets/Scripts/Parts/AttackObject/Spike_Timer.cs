@@ -1,23 +1,27 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spike_Timer : MonoBehaviour
 {
-    [Header("´æÔÚÊ±¼ä")]
+    [Header("å­˜åœ¨æ—¶é—´")]
     [SerializeField]
     private float time;
 
     private float t;
     private Bullet spike;
 
-    void Start()
+    private void Start()
     {
-        t = 0;
         spike = gameObject.GetComponent<Bullet>();
     }
 
-    void Update()
+    private void OnEnable()
+    {
+        t = 0;
+    }
+
+    private void Update()
     {
         t+= Time.deltaTime;
         if (t > time)

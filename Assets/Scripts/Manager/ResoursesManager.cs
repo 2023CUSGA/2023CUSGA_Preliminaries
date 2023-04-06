@@ -7,15 +7,6 @@ using UnityEngine;
 public class ResoursesManager : MonoBehaviour
 {
     private static ResoursesManager instance;  //单例模式
-    public enum resourseNames:int  //资源名称及其对应的编号
-    {
-        木材 = 0,
-        石材 = 1,
-        铜块 = 2,
-        铁块 = 3,
-        合金 = 4,
-        金币 = 5
-    }
 
     //资源管理
     private List<int> resoursesList;  //资源数量list
@@ -37,12 +28,12 @@ public class ResoursesManager : MonoBehaviour
 
     public int GetResoursesNumber(string name)  //返回资源数量
     {
-        return resoursesList[(int)Enum.Parse(typeof(resourseNames), name)];
+        return resoursesList[(int)Enum.Parse(typeof(ResourseNames), name)];
     }
 
     public void AddResourses(string name,int num)  //资源数量的增减
     {
-        resoursesList[(int)Enum.Parse(typeof(resourseNames), name)] += num;
+        resoursesList[(int)Enum.Parse(typeof(ResourseNames), name)] += num;
         OnResourseNumberChanged();
     }
 

@@ -12,7 +12,7 @@ public abstract class AttackObjectBase : MonoBehaviour
     [SerializeField]
     protected string buff;
 
-    protected EnemyBase GetEnemy(Collision2D collision)
+    public EnemyBase GetEnemy(Collision2D collision)
     {
         EnemyBase enemy = null;
         if ((enemy = collision.gameObject.GetComponent<NormalEnemy>()) != null) { }
@@ -48,6 +48,6 @@ public abstract class AttackObjectBase : MonoBehaviour
 
     public void DestroyGameObject()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

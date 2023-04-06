@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 3489593314986615665}
   - component: {fileID: 3489593314986615667}
   - component: {fileID: 6740404888831573062}
-  - component: {fileID: 8721039594551465421}
+  - component: {fileID: 6308489073871248185}
   - component: {fileID: 1257021254252814352}
+  - component: {fileID: 8721039594551465421}
   m_Layer: 0
   m_Name: train_body0
   m_TagString: TrainBody
@@ -136,7 +137,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11, y: 16.282253}
   m_EdgeRadius: 0
---- !u!114 &8721039594551465421
+--- !u!114 &6308489073871248185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,11 +146,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3489593314986615664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd7962259b13d16448bfcfba9ab28ccb, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cc0ec90659f1504b901f5f96212eb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  health: 0
 --- !u!114 &1257021254252814352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,9 +161,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9c8578a61642f44bda313a6fbd6439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  health: 0
   moveDir: {x: 0, y: 0}
+--- !u!114 &8721039594551465421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3489593314986615664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd7962259b13d16448bfcfba9ab28ccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3489593315677014394
 GameObject:
   m_ObjectHideFlags: 0
