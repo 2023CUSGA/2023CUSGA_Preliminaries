@@ -192,19 +192,20 @@ public class TrainheadMov : MonoBehaviour
             switch (i)   //各个车头的模式
             {
                 case 0:
-                    //enemyBaseTemp.Repulsed(30);
+                    enemyBaseTemp.Repulsed(30);
                     break;
                 case 1:
-                    //enemyBaseTemp.Hurt(1000000);
+                    enemyBaseTemp.Hurt(1000000);
                     break;
                 case 2:
-                    //enemyBaseTemp.Repulsed(60);
-                    //enemyBaseTemp.Hurt(5);
+                    enemyBaseTemp.Repulsed(60);
+                    enemyBaseTemp.Hurt(5);
                     break;
                 case 3:
-                    //enemyBaseTemp.Repulsed(30);
+                    enemyBaseTemp.Repulsed(30);
                     break;
                 default:
+                    enemyBaseTemp.Repulsed(30);
                     break;
             }
         }

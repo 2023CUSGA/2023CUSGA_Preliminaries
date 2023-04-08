@@ -15,10 +15,13 @@ public class TrainManager : MonoBehaviour
     private bool isUpdated = false;  //火车头是否经过升级
     [SerializeField]private int trainHeadType = 0;  //火车头类型 0.普通 1.重装 2.弹力 3.迅捷
     private Coroutine energyLeakCoro;  //能量流失协程函数
+    private GameObject upgradeCard;  //升级火车头的卡片UI
 
     private void Awake()
     {
         instance = this;  //单例模式
+        upgradeCard = GameObject.FindGameObjectWithTag("UI_UpgradeCards");
+        upgradeCard.SetActive(false);
         initTrain();
     }
 
@@ -45,6 +48,11 @@ public class TrainManager : MonoBehaviour
     public bool GetIsPerversion()  //isPerversion Get方法
     {
         return this.isPerversion;
+    }
+
+    public void SetUpgradeCard(GameObject upgradeCard)  //upgradeCard Set方法
+    {
+        this.upgradeCard = upgradeCard;
     }
 
     void initTrain()  //初始化火车
@@ -82,16 +90,18 @@ public class TrainManager : MonoBehaviour
 
     public void AddEnergy(int i=1)  //增加能量
     {
-        if(energy == 0)
+        if(energy == 0)  //能量从0开始获得：启动能量衰减计时器
         {
             timeCount_CrashEnermy = 0;
             energyLeakCoro =  StartCoroutine(EnergyLeak());
         }
-        if(energy<100) energy+=i;
-        if(energy>=80 && !isUpdated)
+        if (energy + i <= 100) energy += i;
+        else energy = 100;
+
+        if(energy>=80 && !isUpdated)  //能量超过80且未升级：升级
         {
             isUpdated = true;
-            UpdateTrainHead();
+            UpgradeTrainHead();
         }
     }
 
@@ -99,35 +109,53 @@ public class TrainManager : MonoBehaviour
     {
         if(i>energy) energy = 0;
         else energy -= i;
-        if(energy == 0)
+
+        if(energy == 0)  //能量衰减至0：停止能量衰减计时器
         {
             StopCoroutine(energyLeakCoro);
             timeCount_CrashEnermy = 0;
         }
-        if(energy<80 && isUpdated)
+        if(energy<80 && isUpdated)  //能量低于80：退化
         {
             isUpdated = false;
             DownGradeTrainHead();
         }
     }
 
-    private void UpdateTrainHead()  //火车头升级
+    private void UpgradeTrainHead()  //火车头升级
     {
-        Debug.Log("火车头升级");
+        upgradeCard.SetActive(true);
+        Time.timeScale = 0;
     }  
 
     private void DownGradeTrainHead()  //火车头降级
     {
-        Debug.Log("火车头降级");
-        trainHeadType = 0;
+        SetTrainHeadType(0);
     }
 
     public void SetTrainHeadType(int i)  //trainHeadType Set方法
     {
+
         if (0 <= i && i <= 3)
+        {
             this.trainHeadType = i;
+            if(i==1)  //设置毁灭车头的配置
+            {
+                GameObject.Find("trainhead").GetComponent<TrainheadMov>().SetMoveSpeed(2.0f);
+            }
+            if(i==2)  //设置弹力车头的配置
+            {
+                GameObject.Find("trainhead").GetComponent<TrainheadMov>().SetMoveSpeed(2.5f);
+            }
+            if(i==3)  //设置迅捷车头的配置
+            {
+                GameObject.Find("trainhead").GetComponent<TrainheadMov>().SetMoveSpeed(4.0f);
+            }
+        }
         else
-            Debug.Log("trainHeadType Error: 0.普通 1.重装 2.弹力 3.迅捷");
+            Debug.Log("trainHeadType Error: 0.普通 1.毁灭 2.弹力 3.迅捷");
+        upgradeCard.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public int GetTrainHeadType()  //trainHeadType Get方法

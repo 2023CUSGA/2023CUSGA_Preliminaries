@@ -10,6 +10,7 @@ TagManager:
   - ResoursePoint
   - AttackObject
   - Enemy
+  - UI_UpgradeCards
   layers:
   - Default
   - TransparentFX
