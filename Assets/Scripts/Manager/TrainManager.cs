@@ -2,18 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TrainManager : MonoBehaviour
 {
     private static TrainManager instance;  //火车管理器，单例模式
     public GameObject trainhead;  //火车头预制体
     public GameObject trainbody;  //火车身预制体
+    public List<Sprite> trainhead_images = new List<Sprite>(4);  //火车头贴图list 0.普通 1.毁灭 2.弹力 3.迅捷
     private int energy = 0;  //火车头能量
     [SerializeField]private float timeCount_CrashEnermy = 0;
     [SerializeField]private int trainLength;  //火车长度
     private bool isPerversion = false;  //火车操控方向是否颠倒
     private bool isUpdated = false;  //火车头是否经过升级
-    [SerializeField]private int trainHeadType = 0;  //火车头类型 0.普通 1.重装 2.弹力 3.迅捷
+    [SerializeField]private int trainHeadType = 0;  //火车头类型 0.普通 1.毁灭 2.弹力 3.迅捷
     private Coroutine energyLeakCoro;  //能量流失协程函数
     private GameObject upgradeCard;  //升级火车头的卡片UI
 
@@ -139,17 +141,25 @@ public class TrainManager : MonoBehaviour
         if (0 <= i && i <= 3)
         {
             this.trainHeadType = i;
+            if(i==0)
+            {
+                GameObject.Find("train_head").GetComponent<SpriteRenderer>().sprite = trainhead_images[0];
+                GameObject.Find("train_head").GetComponent<TrainheadMov>().SetMoveSpeed(3.0f);
+            }
             if(i==1)  //设置毁灭车头的配置
             {
-                GameObject.Find("trainhead").GetComponent<TrainheadMov>().SetMoveSpeed(2.0f);
+                GameObject.Find("train_head").GetComponent<SpriteRenderer>().sprite = trainhead_images[1];
+                GameObject.Find("train_head").GetComponent<TrainheadMov>().SetMoveSpeed(2.0f);
             }
             if(i==2)  //设置弹力车头的配置
             {
-                GameObject.Find("trainhead").GetComponent<TrainheadMov>().SetMoveSpeed(2.5f);
+                GameObject.Find("train_head").GetComponent<SpriteRenderer>().sprite = trainhead_images[2];
+                GameObject.Find("train_head").GetComponent<TrainheadMov>().SetMoveSpeed(2.5f);
             }
             if(i==3)  //设置迅捷车头的配置
             {
-                GameObject.Find("trainhead").GetComponent<TrainheadMov>().SetMoveSpeed(4.0f);
+                GameObject.Find("train_head").GetComponent<SpriteRenderer>().sprite = trainhead_images[3];
+                GameObject.Find("train_head").GetComponent<TrainheadMov>().SetMoveSpeed(4.0f);
             }
         }
         else
