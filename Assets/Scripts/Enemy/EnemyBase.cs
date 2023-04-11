@@ -214,12 +214,12 @@ public class EnemyBase : EntityBase
         //this.transform.Translate();
     }
 
-    IEnumerator WaitForChaos(float seconds = 1.5f)
+    public IEnumerator WaitForChaos(float seconds = 1.5f)
     {
         yield return new WaitForSeconds(seconds);
         isChaos = false;
     }
-    IEnumerator WaitForDecelerate(float seconds = 1.5f)
+    public IEnumerator WaitForDecelerate(float seconds = 1.5f)
     {
         yield return new WaitForSeconds(seconds);
         NormalSpeed();

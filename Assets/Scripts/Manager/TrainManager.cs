@@ -112,6 +112,7 @@ public class TrainManager : MonoBehaviour
         else if(energy == 100 && !isInMaxPower)  //满能量再次升级
         {
             isInMaxPower = true;
+            StopCoroutine(energyLeakCoro);
             StartCoroutine(MaxPowerCounter());
         }
     }
@@ -197,19 +198,10 @@ public class TrainManager : MonoBehaviour
 
     IEnumerator MaxPowerCounter()  //能量满格计时器
     {
-        int i = 0;
-        while(true)
-        {
-            i++;
-            if (i >= 4)
-            {
-                isInMaxPower = false;
-                yield break;
-            }
-            else
-            {
-                yield return new WaitForSeconds(1);
-            }
-        }
+        yield return new WaitForSeconds(3.0f);
+        energy = 80;
+        timeCount_CrashEnermy = 0;
+        energyLeakCoro = StartCoroutine(EnergyLeak());
+        isInMaxPower = false;
     }
 }

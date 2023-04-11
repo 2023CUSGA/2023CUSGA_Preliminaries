@@ -192,7 +192,7 @@ public class TrainheadMov : MonoBehaviour
             switch (i)   //各个车头的模式
             {
                 case 0:
-                    enemyBaseTemp.Repulsed(30);  //正常弹开
+                    enemyBaseTemp.Repulsed(3);  //正常弹开
                     break;
                 case 1:
                     if (TrainManager.GetInstance().GetIsInMaxPower())
@@ -208,11 +208,17 @@ public class TrainheadMov : MonoBehaviour
                     if (TrainManager.GetInstance().GetIsInMaxPower())
                     {
                         //敌人全体减速
+                        List<EnemyBase> tempList = EnvironmentManager.instance.enemysList;
+                        foreach(EnemyBase temp in tempList)
+                        {
+                            temp.Decelerate(0.5f);
+                            temp.StartCoroutine(temp.WaitForDecelerate(3.0f));
+                        }
                     }
                     else
                     {
                         //弹开并造成小量伤害
-                        enemyBaseTemp.Repulsed(60);
+                        enemyBaseTemp.Repulsed(6);
                         enemyBaseTemp.Hurt(enemyBaseTemp.maxHp * 0.2f);
                     }
                     break;
@@ -220,14 +226,20 @@ public class TrainheadMov : MonoBehaviour
                     if (TrainManager.GetInstance().GetIsInMaxPower())
                     {
                         //敌人全体晕眩
+                        List<EnemyBase> tempList = EnvironmentManager.instance.enemysList;
+                        foreach (EnemyBase temp in tempList)
+                        {
+                            temp.isChaos = true;
+                            temp.StartCoroutine(temp.WaitForChaos(3.0f));
+                        }
                     }
                     else
                     {
-                        enemyBaseTemp.Repulsed(30);  //正常弹开
+                        enemyBaseTemp.Repulsed(3);  //正常弹开
                     }
                     break;
                 default:
-                    enemyBaseTemp.Repulsed(30);
+                    enemyBaseTemp.Repulsed(3);
                     break;
             }
         }
