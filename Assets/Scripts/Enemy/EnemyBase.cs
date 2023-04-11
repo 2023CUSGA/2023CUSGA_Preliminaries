@@ -210,15 +210,19 @@ public class EnemyBase : EntityBase
         isChaos = true;
         Vector2 dir = transform.position - GetComponentInChildren<TrackTrigger>().targetTrain.transform.position;
         rb.AddForce(dir * power, ForceMode2D.Impulse);
-        StartCoroutine(WaitForRepulsed());
+        StartCoroutine(WaitForChaos());
         //this.transform.Translate();
     }
 
-    IEnumerator WaitForRepulsed()
+    IEnumerator WaitForChaos(float seconds = 1.5f)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(seconds);
         isChaos = false;
-
+    }
+    IEnumerator WaitForDecelerate(float seconds = 1.5f)
+    {
+        yield return new WaitForSeconds(seconds);
+        NormalSpeed();
     }
 
     /// <summary>
@@ -250,6 +254,7 @@ public class EnemyBase : EntityBase
         curr_atk = defaultAtk;
     }
     public bool isChaos = false;    // 是否处于混乱状态
+
     #endregion
 
 
