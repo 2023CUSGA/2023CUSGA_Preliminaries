@@ -18,6 +18,7 @@ public class TrainManager : MonoBehaviour
     [SerializeField]private int trainHeadType = 0;  //火车头类型 0.普通 1.毁灭 2.弹力 3.迅捷
     private Coroutine energyLeakCoro;  //能量流失协程函数
     private GameObject upgradeCard;  //升级火车头的卡片UI
+    private bool isInMaxPower = false; //是否为满能量状态
 
     private void Awake()
     {
@@ -52,9 +53,9 @@ public class TrainManager : MonoBehaviour
         return this.isPerversion;
     }
 
-    public void SetUpgradeCard(GameObject upgradeCard)  //upgradeCard Set方法
+    public bool GetIsInMaxPower()  //IsInMaxPower Get方法
     {
-        this.upgradeCard = upgradeCard;
+        return isInMaxPower;
     }
 
     void initTrain()  //初始化火车
@@ -92,18 +93,26 @@ public class TrainManager : MonoBehaviour
 
     public void AddEnergy(int i=1)  //增加能量
     {
-        if(energy == 0)  //能量从0开始获得：启动能量衰减计时器
+        if (!isInMaxPower)
         {
-            timeCount_CrashEnermy = 0;
-            energyLeakCoro =  StartCoroutine(EnergyLeak());
+            if (energy == 0)  //能量从0开始获得：启动能量衰减计时器
+            {
+                timeCount_CrashEnermy = 0;
+                energyLeakCoro = StartCoroutine(EnergyLeak());
+            }
+            if (energy + i <= 100) energy += i;
+            else energy = 100;
         }
-        if (energy + i <= 100) energy += i;
-        else energy = 100;
 
         if(energy>=80 && !isUpdated)  //能量超过80且未升级：升级
         {
             isUpdated = true;
             UpgradeTrainHead();
+        }
+        else if(energy == 100 && !isInMaxPower)  //满能量再次升级
+        {
+            isInMaxPower = true;
+            StartCoroutine(MaxPowerCounter());
         }
     }
 
@@ -183,6 +192,24 @@ public class TrainManager : MonoBehaviour
                 ReduceEnergy(1);
             }
             yield return new WaitForSeconds(1);
+        }
+    }
+
+    IEnumerator MaxPowerCounter()  //能量满格计时器
+    {
+        int i = 0;
+        while(true)
+        {
+            i++;
+            if (i >= 4)
+            {
+                isInMaxPower = false;
+                yield break;
+            }
+            else
+            {
+                yield return new WaitForSeconds(1);
+            }
         }
     }
 }

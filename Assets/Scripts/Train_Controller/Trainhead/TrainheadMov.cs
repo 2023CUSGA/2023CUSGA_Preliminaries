@@ -192,17 +192,39 @@ public class TrainheadMov : MonoBehaviour
             switch (i)   //各个车头的模式
             {
                 case 0:
-                    enemyBaseTemp.Repulsed(30);
+                    enemyBaseTemp.Repulsed(30);  //正常弹开
                     break;
                 case 1:
-                    enemyBaseTemp.Hurt(1000000);
+                    if (TrainManager.GetInstance().GetIsInMaxPower())
+                    {
+                        enemyBaseTemp.Hurt(enemyBaseTemp.maxHp);  //创死敌人
+                    }
+                    else
+                    {
+                        enemyBaseTemp.Hurt(enemyBaseTemp.maxHp*0.4f);  //对敌人造成伤害
+                    }
                     break;
                 case 2:
-                    enemyBaseTemp.Repulsed(60);
-                    enemyBaseTemp.Hurt(5);
+                    if (TrainManager.GetInstance().GetIsInMaxPower())
+                    {
+                        //敌人全体减速
+                    }
+                    else
+                    {
+                        //弹开并造成小量伤害
+                        enemyBaseTemp.Repulsed(60);
+                        enemyBaseTemp.Hurt(enemyBaseTemp.maxHp * 0.2f);
+                    }
                     break;
                 case 3:
-                    enemyBaseTemp.Repulsed(30);
+                    if (TrainManager.GetInstance().GetIsInMaxPower())
+                    {
+                        //敌人全体晕眩
+                    }
+                    else
+                    {
+                        enemyBaseTemp.Repulsed(30);  //正常弹开
+                    }
                     break;
                 default:
                     enemyBaseTemp.Repulsed(30);
