@@ -219,6 +219,11 @@ public class EnemyBase : EntityBase
         yield return new WaitForSeconds(seconds);
         isChaos = false;
     }
+    IEnumerator WaitForDecelerate(float seconds = 1.5f)
+    {
+        yield return new WaitForSeconds(seconds);
+        NormalSpeed();
+    }
 
     /// <summary>
     /// 减速buff
