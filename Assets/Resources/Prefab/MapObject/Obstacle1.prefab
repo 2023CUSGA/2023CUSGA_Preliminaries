@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8506502893978673028}
   - component: {fileID: 2546615426162244672}
   - component: {fileID: 8834571475441179537}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Obstacle1
   m_TagString: RoadBlock
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

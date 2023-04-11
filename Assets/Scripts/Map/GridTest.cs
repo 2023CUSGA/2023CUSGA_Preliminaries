@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,12 +13,11 @@ public class GridTest : MonoBehaviour
     public GameObject ResPoint;
     [Header("敌人种类")] public GameObject[] spawnObjects;
     public int spawnCount;
-
+    public AstarPath Path;
     private void Start()
     {
         grid = new Grid(25, 15, 1f, this.transform);
-        PathFindingManager.instance.gridArry = PathFindingArray(grid.gridArry);
-        SpawnEnemy();
+        //PathFindingManager.instance.gridArry = PathFindingArray(grid.gridArry);
     }
 
     public void ClickShuffleButton()
@@ -27,6 +27,8 @@ public class GridTest : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
         grid.ShowGridInfo(Obstacle1, Obstacle2, Obstacle3, ResPoint);
+        Path.Scan();
+        SpawnEnemy();
     }
 
     void SpawnEnemy()

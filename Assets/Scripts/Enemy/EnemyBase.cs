@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Pathfinding;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnemyBase : EntityBase
@@ -29,6 +31,9 @@ public class EnemyBase : EntityBase
     int pathListIndex;
     Vector3 direction;
 
+    Seeker seeker;
+    List<Vector3> aimPoint;
+
     /// <summary>
     /// 初始化
     /// </summary>
@@ -38,9 +43,11 @@ public class EnemyBase : EntityBase
         curr_hp = maxHp;
         curr_atk = defaultAtk;
         moveSpeed = defaultSpeed;
-
         buffManager = gameObject.GetComponent<BuffManager>();
         //animator = GetComponent<Animator>();
+
+        seeker = GetComponent<Seeker>();
+        seeker.pathCallback = OnPathComplete;
 
         EnvironmentManager.instance.enemysList.Add(this);
     }
@@ -70,28 +77,40 @@ public class EnemyBase : EntityBase
         //transform.position = Vector3.Lerp(this.transform.position, endPos, percent);
 
         //transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, moveSpeed); 
+
+        //if (pathPoints.Count > 0)
+        //{
+        //    // 开始向下个路径点位移
+        //    transform.position += direction.normalized * moveSpeed * Time.deltaTime;
+        //    // 如果到达下一个路径点
+        //    if (Vector3.Distance(new Vector3(pathPoints[pathListIndex].x, pathPoints[pathListIndex].y), gameObject.transform.position) <= 0.1f)
+        //    {
+        //        pathListIndex++;
+        //        if (pathPoints.Count <= pathListIndex)      // 如果没有下个路径点了
+        //        {
+        //            pathPoints.Clear();
+        //            pathListIndex = 0;
+        //        }
+        //        else
+        //        {
+        //            //计算下个路径点行走方向
+        //            direction = new Vector3(pathPoints[pathListIndex].x, pathPoints[pathListIndex].y) - transform.position;
+        //        }
+        //    }
+        //}
         #endregion
 
-        if (pathPoints.Count > 0)
+        if (aimPoint != null && aimPoint.Count != 0)
         {
-            // 开始向下个路径点位移
-            transform.position += direction.normalized * moveSpeed * Time.deltaTime;
-            // 如果到达下一个路径点
-            if (Vector3.Distance(new Vector3(pathPoints[pathListIndex].x, pathPoints[pathListIndex].y), gameObject.transform.position) <= 0.1f)
+            Vector3 dir = (aimPoint[0] - transform.position).normalized;
+            transform.position += dir * moveSpeed * Time.fixedDeltaTime;    // 移动
+
+            if ((transform.position - aimPoint[0]).sqrMagnitude <= 0.1f)    // 是否到达下一个目标点
             {
-                pathListIndex++;
-                if (pathPoints.Count <= pathListIndex)      // 如果没有下个路径点了
-                {
-                    pathPoints.Clear();
-                    pathListIndex = 0;
-                }
-                else
-                {
-                    //计算下个路径点行走方向
-                    direction = new Vector3(pathPoints[pathListIndex].x, pathPoints[pathListIndex].y) - transform.position;
-                }
+                aimPoint.RemoveAt(0);
             }
         }
+
     }
 
     /// <summary>
@@ -99,15 +118,26 @@ public class EnemyBase : EntityBase
     /// </summary>
     public void RePathFinding(Transform targetTrain)
     {
-        pathPoints.Clear();
-        pathListIndex = 0;
-        // 获取路径
-        pathPoints = PathFinding(PathFindingManager.instance.IAStar(this, transform.position, targetTrain.transform.position));
-        if (pathPoints.Count > 0)   // 计算初始行走方向
-        {
-            direction = new Vector3(pathPoints[0].x, pathPoints[0].y) - transform.position;
-        }
+        //pathPoints.Clear();
+        //pathListIndex = 0;
+        //// 获取路径
+        //pathPoints = PathFinding(PathFindingManager.instance.IAStar(this, transform.position, targetTrain.transform.position));
+        //if (pathPoints.Count > 0)   // 计算初始行走方向
+        //{
+        //    direction = new Vector3(pathPoints[0].x, pathPoints[0].y) - transform.position;
+        //}
+
+        seeker.StartPath(transform.position, targetTrain.position);
+        Vector3 dir = (targetTrain.position - transform.position);
+        transform.localScale = dir.x >= 0 ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);  // 转向
+
     }
+
+    void OnPathComplete(Path path)
+    {
+        aimPoint = new List<Vector3>(path.vectorPath);
+    }
+
     /// <summary>
     /// 将路径转成列表
     /// </summary>
@@ -179,7 +209,7 @@ public class EnemyBase : EntityBase
     {
         isChaos = true;
         Vector2 dir = transform.position - GetComponentInChildren<TrackTrigger>().targetTrain.transform.position;
-        rb.AddForce(dir * power);
+        rb.AddForce(dir * power, ForceMode2D.Impulse);
         StartCoroutine(WaitForRepulsed());
         //this.transform.Translate();
     }

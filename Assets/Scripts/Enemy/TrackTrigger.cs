@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class TrackTrigger : MonoBehaviour
 {
@@ -26,7 +27,8 @@ public class TrackTrigger : MonoBehaviour
 
     }
 
-    void Update()
+
+    void FixedUpdate()
     {
         if (targetTrain != null)
         {
@@ -36,7 +38,7 @@ public class TrackTrigger : MonoBehaviour
                 parent.RePathFinding(targetTrain.transform);
             }
             else
-                timer += Time.deltaTime;
+                timer += Time.fixedDeltaTime;
 
             parent.Move(targetTrain.transform.position);    // 通知敌人追击列车
         }
