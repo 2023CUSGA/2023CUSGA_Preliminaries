@@ -65,7 +65,11 @@ public class TrainBodyMov : MonoBehaviour
 
         if (tempRoute.GetIsVaild())
         {
-            routeList.Add(tempRoute);
+            if(this.id==0 && train_head.GetComponent<TrainheadMov>().GetTrainSpeed().Equals(0) && routeList.Count()>0)
+            {
+                routeList[routeList.Count() - 1] = tempRoute;
+            }
+            else routeList.Add(tempRoute);
         }
         return;
     }
@@ -84,7 +88,7 @@ public class TrainBodyMov : MonoBehaviour
                 this.transform.position = tempPosition;
                 this.SetRoute(new Route(this.transform.position, this.moveDir));  //设置转向时的信息
                 routeList.RemoveAt(0);
-                if (Vector3.Distance(transform.position, preNode.transform.position) != distance)
+                if (Vector3.Distance(transform.position, preNode.transform.position) != distance && routeList.Count()<=0)
                 {
                     //Debug.Log("调整位置");
                     transform.position = new Vector3(preNode.transform.position.x - distance * moveDir.x,

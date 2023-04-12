@@ -288,6 +288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NormalEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8060850234600911818, guid: 7c784bd54afb8ac4cb87f2c4234bb180, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c784bd54afb8ac4cb87f2c4234bb180, type: 3}
 --- !u!1001 &449665265
@@ -300,6 +304,10 @@ PrefabInstance:
     - target: {fileID: 275065721367068465, guid: 390cf97542d7b7848bac5a06d0b9cbf3, type: 3}
       propertyPath: m_Name
       value: TankEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 275065721367068465, guid: 390cf97542d7b7848bac5a06d0b9cbf3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 275065721367068466, guid: 390cf97542d7b7848bac5a06d0b9cbf3, type: 3}
       propertyPath: m_RootOrder
@@ -636,6 +644,10 @@ PrefabInstance:
     - target: {fileID: 7975251878980787965, guid: 8ca7e06e0715fdb469c9d5e4a129122f, type: 3}
       propertyPath: m_Name
       value: FastEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975251878980787965, guid: 8ca7e06e0715fdb469c9d5e4a129122f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ca7e06e0715fdb469c9d5e4a129122f, type: 3}
