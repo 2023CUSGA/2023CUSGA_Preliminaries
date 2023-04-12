@@ -9,7 +9,6 @@ public class ResourseGathering : MonoBehaviour
     private bool isInResoursePoint = false; //是否在资源点内
     private TrainheadMov trainHead; //火车头运动脚本
 
-    // Start is called before the first frame update
     void Start()
     {
         trainHead = GameObject.Find("train_head").GetComponent<TrainheadMov>();  //获取火车头运动脚本
@@ -17,7 +16,6 @@ public class ResourseGathering : MonoBehaviour
         isDizzy = trainHead.GetIsDizzy();  //是否晕眩
     }
 
-    // Update is called once per frame
     void Update()
     {
         isMoving = trainHead.GetIsMoving();
