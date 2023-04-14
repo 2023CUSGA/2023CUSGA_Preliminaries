@@ -60,16 +60,16 @@ public class TrainManager : MonoBehaviour
 
     void initTrain()  //初始化火车
     {
-        float nodeDistance = 0;
-        Instantiate(trainhead, new Vector3(0,0,0),Quaternion.identity).name = "train_head";  //初始化火车头
+        float nodeDistance = 7.11f;
+        Instantiate(trainhead, new Vector3(13.29f,7.11f,0),Quaternion.identity).name = "train_head";  //初始化火车头
 
         for(int i=0;i<trainLength-1;i++)  //初始化火车身
         {
             if (i == 0)
-                nodeDistance -= 0.55f;
+                nodeDistance -= 0.60f;
             else
-                nodeDistance -= 0.57f;
-            GameObject temp = Instantiate(trainbody, new Vector3(0, nodeDistance, 0), Quaternion.identity);
+                nodeDistance -= 0.60f;
+            GameObject temp = Instantiate(trainbody, new Vector3(13.29f, nodeDistance, 0), Quaternion.identity);
             temp.name = "train_body" + i.ToString();
             temp.GetComponent<TrainBody>().SetId(i);
         }
