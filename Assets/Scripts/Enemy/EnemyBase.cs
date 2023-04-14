@@ -163,7 +163,7 @@ public class EnemyBase : EntityBase
         // TODO:播放动画、对火车造成伤害
         if (collision.CompareTag("TrainHead") || collision.CompareTag("TrainBody"))
         {
-
+            collision.GetComponent<TrainBody>().DecreaseHealth(5);
         }
 
     }
@@ -176,8 +176,7 @@ public class EnemyBase : EntityBase
         {
             this.gameObject.SetActive(false);
             EnvironmentManager.instance.enemysList.Remove(this);
-
-            // TODO:掉金币
+            EnvironmentManager.instance.EnemyKillNum++;
         }
     }
 
@@ -188,8 +187,7 @@ public class EnemyBase : EntityBase
         {
             this.gameObject.SetActive(false);
             EnvironmentManager.instance.enemysList.Remove(this);
-
-            // TODO:掉金币
+            EnvironmentManager.instance.EnemyKillNum++;
         }
     }
 

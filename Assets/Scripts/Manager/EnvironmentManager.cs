@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnvironmentManager : MonoBehaviour
 {
@@ -22,6 +24,23 @@ public class EnvironmentManager : MonoBehaviour
     public int enemyBaseCount;
     int enemyMinCount;
     int enemyMaxCount;
+
+    public Action gameWin;
+    public Action gameLose;
+    public Action<int> addGold;
+
+    public int enemyKillNum;
+    public int EnemyKillNum
+    {
+        get { return enemyKillNum; }
+        set
+        {
+            int rand = UnityEngine.Random.Range(5, 9);
+            ResourceDataContainer.IncreaseResourceQuantity(ResourseNames.金币, rand);
+
+            addGold?.Invoke(rand);
+        }
+    }
 
 	void Awake()
 	{
@@ -69,12 +88,13 @@ public class EnvironmentManager : MonoBehaviour
 
     void CheckEnemyTideInfo()
     {
-        if (PlayerPrefs.HasKey("levelNum"))
+        if (!PlayerPrefs.HasKey("levelNum"))
         {
-            levelNum = PlayerPrefs.GetInt("levelNum");
-        }
-        else
             levelNum = 1;
+            PlayerPrefs.SetInt("levelNum", levelNum);
+        }
+        levelNum = PlayerPrefs.GetInt("levelNum");
+
 
         switch (levelNum)
         {
@@ -120,6 +140,12 @@ public class EnvironmentManager : MonoBehaviour
                 enemyMinCount = 10;
                 enemyMaxCount = 10;
                 break;
+            default:
+                tideCount = 10;
+                enemyBaseCount = 50;
+                enemyMinCount = 10;
+                enemyMaxCount = 10;
+                break;
         }
     }
 
@@ -131,6 +157,7 @@ public class EnvironmentManager : MonoBehaviour
             tideCount--;
             if (tideCount < 0)
             {
+                CheckGameOver();
                 return;
             }
             else
@@ -176,6 +203,14 @@ public class EnvironmentManager : MonoBehaviour
         }
     }
 
+    void CheckGameOver()
+    {
+        if (enemysList.Count == 0)
+        {
+            EnemyKillNum = 0;
+            gameWin?.Invoke();
+        }
 
+    }
 
 }

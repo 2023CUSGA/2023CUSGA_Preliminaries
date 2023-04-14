@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73b14579912f80469b2db6347bfc6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldNum: {fileID: 2092861925188138959}
 --- !u!114 &133513775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,7 +353,7 @@ MonoBehaviour:
   readonlyMode: 0
   activeSettings:
     name: Default
-    id: e1f1dfca-8908-482b-9622-f3a9dcdc4fb4
+    id: 5d1ab1e2-21d9-41a8-8035-d86773f6854e
     skin: Default
     fileName: Default
     redistributable: 0
@@ -361,7 +362,7 @@ MonoBehaviour:
     type: json
   allSettings:
   - name: Default
-    id: e1f1dfca-8908-482b-9622-f3a9dcdc4fb4
+    id: 5d1ab1e2-21d9-41a8-8035-d86773f6854e
     skin: Default
     fileName: Default
     redistributable: 0
@@ -1346,7 +1347,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 887552202}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 133513774}
+        m_TargetAssemblyTypeName: UICampsite, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &887552202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2665,3 +2678,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a609a4fd4f17f0149a5cdb7a60c12217, type: 3}
+--- !u!114 &2092861925188138959 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2092861925469246703, guid: a609a4fd4f17f0149a5cdb7a60c12217, type: 3}
+  m_PrefabInstance: {fileID: 2092861925188138958}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
