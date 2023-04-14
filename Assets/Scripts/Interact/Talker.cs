@@ -13,9 +13,9 @@ namespace Assets.Scripts.Interact
     {
         public TextAsset talkTextFile;
 
-        public void Start()
-        {
+        private void OnEnable() {
             DialogueManager.Instance.ShowNormalDialogue(talkTextFile);
+            
         }
 
 

@@ -8,7 +8,8 @@ public class MoveTest : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        collision.gameObject.GetComponent<EnemyBase>().Repulsed(power);
+        if (collision.collider.tag == "Enemy")
+            collision.gameObject.GetComponent<EnemyBase>().Repulsed(power);
     }
 
     private void Update()

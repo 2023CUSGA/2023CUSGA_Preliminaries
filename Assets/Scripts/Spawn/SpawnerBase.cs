@@ -23,6 +23,10 @@ public class SpawnerBase : MonoBehaviour
             PoolManager.Release(spawnObjects[index], transform.position);
         }
     }
-
+    public virtual void SpawnPrefab()
+    {
+        int index = Random.Range(0, spawnObjects.Length);
+        PoolManager.Release(spawnObjects[index], transform.position);
+    }
 
 }

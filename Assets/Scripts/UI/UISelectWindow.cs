@@ -28,7 +28,7 @@ public class UISelectWindow : MonoBehaviour
         this.button_1.onClick.AddListener(OnClickButton_1);
         this.button_2.onClick.AddListener(OnClickButton_2);
         this.button_3.onClick.AddListener(OnClickButton_3);
-        button_1.Select();
+        //button_1.Select();
     }
 
     /// <summary>

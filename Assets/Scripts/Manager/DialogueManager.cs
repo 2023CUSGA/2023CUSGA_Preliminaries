@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
+    public GameObject[] talkers;
     [Header("对话框组件")]
     public GameObject dialogueBox;  // 对话框
     public GameObject nameBar;  // 姓名条
@@ -45,6 +43,13 @@ public class DialogueManager : Singleton<DialogueManager>
     private System.Action endAction;
     public bool isSelecting;
 
+    int randomIndex;
+    private void OnEnable()
+    {
+        randomIndex = UnityEngine.Random.Range(0, talkers.Length);
+        talkers[randomIndex].SetActive(true);
+    }
+
     private void Start()
     {
         waitForSeconds = new(textSpeed);    // 减少文字逐字显示时的GC
@@ -57,6 +62,9 @@ public class DialogueManager : Singleton<DialogueManager>
             if (index >= textList.Count || textList[index].Contains("end")) // 对话结束
             {
                 dialogueBox.SetActive(false);
+                this.gameObject.SetActive(false);
+                talkers[randomIndex].SetActive(false);
+
                 index = 0;
                 var tempAction = endAction;
                 endAction?.Invoke();
@@ -66,7 +74,7 @@ public class DialogueManager : Singleton<DialogueManager>
                 return;
             }
 
-            if (textFinish && textList.Count != 0 && !isSelecting)  // 下一句话
+             if (textFinish && textList.Count != 0 && !isSelecting)  // 下一句话
             {
                 SetTextUI();
             }
