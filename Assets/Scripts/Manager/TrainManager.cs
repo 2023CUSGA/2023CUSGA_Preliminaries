@@ -20,6 +20,7 @@ public class TrainManager : MonoBehaviour
     private GameObject upgradeCard;  //升级火车头的卡片UI
     private bool isInMaxPower = false; //是否为满能量状态
     private int trainBodyNum = 10; //现存车厢数量
+    public event Action onFailedAction;  //失败action
 
     private void Awake()
     {
@@ -221,7 +222,7 @@ public class TrainManager : MonoBehaviour
     {
         if(trainBodyNum <=0)
         {
-            //失败
+            onFailedAction();
         }
     }
 }
