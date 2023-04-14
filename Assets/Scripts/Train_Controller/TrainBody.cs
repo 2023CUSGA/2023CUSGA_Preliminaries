@@ -33,6 +33,7 @@ public class TrainBody : MonoBehaviour
             {
                 health = 0;
                 DisableAllParts();
+                TrainManager.GetInstance().DecreaseTrainBodyNum();
                 dead = true;
             }
         }

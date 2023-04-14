@@ -19,6 +19,7 @@ public class TrainManager : MonoBehaviour
     private Coroutine energyLeakCoro;  //能量流失协程函数
     private GameObject upgradeCard;  //升级火车头的卡片UI
     private bool isInMaxPower = false; //是否为满能量状态
+    private int trainBodyNum = 10; //现存车厢数量
 
     private void Awake()
     {
@@ -26,6 +27,11 @@ public class TrainManager : MonoBehaviour
         upgradeCard = GameObject.FindGameObjectWithTag("UI_UpgradeCards");
         upgradeCard.SetActive(false);
         initTrain();
+    }
+
+    private void Update()
+    {
+        OnFail();
     }
 
     public static TrainManager GetInstance()  //单例模式
@@ -58,11 +64,17 @@ public class TrainManager : MonoBehaviour
         return isInMaxPower;
     }
 
+    public void DecreaseTrainBodyNum(int i=1)
+    {
+        trainBodyNum -= 1;
+    }
+
     void initTrain()  //初始化火车
     {
         float nodeDistance = 7.11f;
         Instantiate(trainhead, new Vector3(13.29f,7.11f,0),Quaternion.identity).name = "train_head";  //初始化火车头
 
+        trainBodyNum = trainLength - 1;
         for(int i=0;i<trainLength-1;i++)  //初始化火车身
         {
             if (i == 0)
@@ -203,5 +215,13 @@ public class TrainManager : MonoBehaviour
         timeCount_CrashEnermy = 0;
         energyLeakCoro = StartCoroutine(EnergyLeak());
         isInMaxPower = false;
+    }
+
+    public void OnFail()
+    {
+        if(trainBodyNum <=0)
+        {
+            //失败
+        }
     }
 }
