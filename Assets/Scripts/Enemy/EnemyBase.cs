@@ -161,7 +161,7 @@ public class EnemyBase : EntityBase
     public void Attack(Collider2D collision)
     {
         // TODO:播放动画、对火车造成伤害
-        if (collision.CompareTag("TrainHead") || collision.CompareTag("TrainBody"))
+        if (collision.CompareTag("TrainBody"))
         {
             collision.GetComponent<TrainBody>().DecreaseHealth(5);
         }
