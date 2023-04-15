@@ -3383,7 +3383,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: aef62224622e8d84d88b2226574bd527, type: 3}
   - {fileID: 21300000, guid: d1d90a0f30b285644bc3d004f9d8e52a, type: 3}
   timeCount_CrashEnermy: 0
-  trainLength: 4
+  trainLength: 8
   trainHeadType: 0
 --- !u!4 &1627691579
 Transform:
