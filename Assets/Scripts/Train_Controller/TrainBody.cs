@@ -12,7 +12,7 @@ public class TrainBody : MonoBehaviour
     public void SetId(int id) { this.id = id; }
 
     //车厢HP
-    private float health;
+    private float health = 100;
     private bool dead;
     public float GetHealth() => health;
     /// <summary>
@@ -33,6 +33,7 @@ public class TrainBody : MonoBehaviour
             {
                 health = 0;
                 DisableAllParts();
+                this.gameObject.GetComponent<TrainBodyMov>().SetBrokeImage();
                 TrainManager.GetInstance().DecreaseTrainBodyNum();
                 dead = true;
             }

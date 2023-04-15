@@ -3378,7 +3378,7 @@ MonoBehaviour:
   trainhead: {fileID: 6589500760651619008, guid: c2d6fc3a53bc90f4aaf16d20edaf5989, type: 3}
   trainbody: {fileID: 3489593314986615664, guid: 7b003f8524933c041bc7685c93ee24a1, type: 3}
   trainhead_images:
-  - {fileID: 1137711089, guid: 1e7c92597cb01f24a885814f08516312, type: 3}
+  - {fileID: 1930374426, guid: 45db410c641a7a241a59c2c2599c9a1b, type: 3}
   - {fileID: 21300000, guid: 6223934428696df4fb5cc3fabdac45b8, type: 3}
   - {fileID: 21300000, guid: aef62224622e8d84d88b2226574bd527, type: 3}
   - {fileID: 21300000, guid: d1d90a0f30b285644bc3d004f9d8e52a, type: 3}
