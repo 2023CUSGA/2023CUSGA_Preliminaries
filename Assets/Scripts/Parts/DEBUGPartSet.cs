@@ -7,10 +7,10 @@ public class DEBUGPartSet : MonoBehaviour
     private List<PartNames> GetRandomParts()
     {
         List<PartNames> parts = new List<PartNames>();
-        int num = Random.Range(0, 4 - 1);
+        int num = Random.Range(0, 3 + 1);
         while (num > 0)
         {
-            int type = Random.Range(1, 4 - 1);
+            int type = Random.Range(1, 3 + 1);
             switch (type)
             {
                 case 1:
