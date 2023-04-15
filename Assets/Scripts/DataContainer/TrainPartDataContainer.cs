@@ -35,7 +35,7 @@ public enum PartNames
 public static class TrainPartDataContainer
 {
     //火车车厢数
-    private static int trainLength = 1;
+    private static int trainLength = 0;
     public static int GetTrainLength() => trainLength;
     public static void SetTrainLength(int length) { trainLength = length; }
 

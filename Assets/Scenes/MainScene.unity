@@ -1467,6 +1467,14 @@ MonoBehaviour:
     size: 10
   - prefab: {fileID: 7128531596500360421, guid: 33179165f50cd184b891f813c3641b50, type: 3}
     size: 10
+  - prefab: {fileID: 6674830102025683885, guid: 16986fbd1e7e76d4ab987a3eed1eef9e, type: 3}
+    size: 60
+  - prefab: {fileID: 6674830102025683885, guid: db982639211ce5c418f70875337a2329, type: 3}
+    size: 120
+  - prefab: {fileID: 6674830102025683885, guid: 98283c579d3a9a4488eb28bdabb39ecd, type: 3}
+    size: 60
+  - prefab: {fileID: 6674830102025683885, guid: d05c63b58ae0a434e98d68d03233cba2, type: 3}
+    size: 30
 --- !u!114 &561189264
 MonoBehaviour:
   m_ObjectHideFlags: 0
