@@ -12,6 +12,7 @@ public class UIGamePlay : MonoBehaviour
 
     public GameObject winPanel;
     public GameObject losePanel;
+    public GameObject guidePanel;
     public Text killNum;
     public Text goldNum;
     public TextMeshProUGUI goldNum2;
@@ -24,6 +25,19 @@ public class UIGamePlay : MonoBehaviour
         TrainManager.GetInstance().onFailedAction += GameLose;
         goldNum2.text = ResourceDataContainer.GetResourceQuantity(ResourseNames.金币).ToString();
         SoundManager.Instance.PlayMusic(SoundDefine.Music_MainScene);
+
+        if (!PlayerPrefs.HasKey("levelNum") )
+        {
+            guidePanel.SetActive(true);
+            //Time.timeScale = 0;
+            return;
+        }
+        if (PlayerPrefs.HasKey("levelNum") && 1 == PlayerPrefs.GetInt("levelNum"))
+        {
+            guidePanel.SetActive(true);
+            //Time.timeScale = 0;
+
+        }
 
     }
 

@@ -71,6 +71,7 @@ public class DialogueManager : Singleton<DialogueManager>
                 // 说明在 Invoke 之后没有新增 endAction
                 if (endAction == tempAction)
                     endAction = null;
+                Time.timeScale = 1;
                 return;
             }
 
@@ -174,8 +175,9 @@ public class DialogueManager : Singleton<DialogueManager>
                 imageLeft.sprite = avatar3;
                 index++;
                 break;
-            case "n":
-                CharacterName.text = "None";
+            case "Guide：":
+                CharacterName.text = "向导";
+                imageLeft.sprite = avatar4;
                 index++;
                 break;
         }
