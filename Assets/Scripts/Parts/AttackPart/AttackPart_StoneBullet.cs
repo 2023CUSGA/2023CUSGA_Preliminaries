@@ -9,8 +9,8 @@ public class AttackPart_StoneBullet : AttackPartBase
 
     private void Start()
     {
-        prefeb = prefebs[0];
-        prefeb_buff = prefebs[1];
+        prefeb = Resources.Load<GameObject>("Prefab/Train/TrainParts/AttackObject/石弹_test");
+        prefeb_buff = Resources.Load<GameObject>("Prefab/Train/TrainParts/AttackObject/石弹_buff_test");
     }
 
     protected override void Attack()

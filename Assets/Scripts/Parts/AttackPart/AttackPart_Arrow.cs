@@ -8,7 +8,7 @@ public class AttackPart_Arrow : AttackPartBase
 
     private void Start()
     {
-        prefeb = prefebs[0];
+        prefeb = Resources.Load<GameObject>("Prefab/Train/TrainParts/AttackObject/弓箭_test");
     }
 
     protected override void Attack()

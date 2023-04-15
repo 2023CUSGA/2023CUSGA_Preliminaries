@@ -8,7 +8,8 @@ public class AttackPart_Spike : AttackPartBase
 
     private void Start()
     {
-        prefeb = prefebs[0];
+        prefeb = Resources.Load<GameObject>("Prefab/Train/TrainParts/AttackObject/地刺_test");
+        
     }
 
     protected override void Attack()
