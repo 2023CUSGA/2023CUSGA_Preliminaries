@@ -27,6 +27,7 @@ public class Grid
     public GameObject Obstacle2;
     public GameObject Obstacle3;
     public GameObject ResPoint;
+    public GameObject[] NoneLand = new GameObject[3];
 
     public Grid(int width, int height, float cellSize, Transform owner)
     {
@@ -43,22 +44,26 @@ public class Grid
             for (int y = 0; y < height; y++)
             {
                 gridArry[x, y] = WorldObject.None;
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 10f);   // 画线
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 10f);
+                //Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 10f);   // 画线
+                //Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 10f);
             }
         }
-        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 10f);
-        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 10f);
+        //Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 10f);
+        //Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 10f);
     }
 
     public Vector3 GetWorldPosition(int x, int y) => new Vector3(x, y) * cellSize;
     
-    public void ShowGridInfo(GameObject obstacle1, GameObject obstacle2, GameObject obstacle3, GameObject ResPoint)
+    public void ShowGridInfo(GameObject obstacle1, GameObject obstacle2, GameObject obstacle3, GameObject ResPoint,
+        GameObject Wastland, GameObject snowyPlain, GameObject Mountain)
     {
         this.Obstacle1 = obstacle1;
         this.Obstacle2 = obstacle2;
         this.Obstacle3 = obstacle3;
         this.ResPoint = ResPoint;
+        this.NoneLand[0] = Wastland;
+        this.NoneLand[1] = snowyPlain;
+        this.NoneLand[2] = Mountain;
 
         foreach (var item in objList)
         {
@@ -94,7 +99,8 @@ public class Grid
                     CreateObstacle3(i);
                     break;
             }
-            
+            CreateNone(i);
+
         }
     }
     public WorldObject[] Shuffle()
@@ -134,6 +140,16 @@ public class Grid
     }
 
 
+    void CreateNone(int i)
+    {
+        int y = i / width;
+        int x = i - y * width;
+        if (gridArry[x, y] == WorldObject.None)
+        {
+            int index = Random.Range(0, 3);
+            objList.Add(PoolManager.Release(NoneLand[index], GetWorldPosition(x, y)));
+        }
+    }
     void CreateResPoint(int i)
     {
         int y = i / width;

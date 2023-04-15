@@ -164,6 +164,8 @@ public class EnemyBase : EntityBase
         if (collision.CompareTag("TrainBody"))
         {
             collision.GetComponent<TrainBody>().DecreaseHealth(5);
+            SoundManager.Instance.PlaySound(SoundDefine.Sound_Enemy1);
+
         }
 
     }
@@ -172,22 +174,30 @@ public class EnemyBase : EntityBase
     public void Hurt(float trainAtk)
     {
         this.curr_hp -= trainAtk;   // 需要在车厢攻击那边写一个受伤间隔逻辑
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_Enemy4);
+
         if (curr_hp <= 0)       // 敌人死亡，返回对象池
         {
             this.gameObject.SetActive(false);
             EnvironmentManager.instance.enemysList.Remove(this);
             EnvironmentManager.instance.EnemyKillNum++;
+            SoundManager.Instance.PlaySound(SoundDefine.Sound_Enemy2);
+
         }
     }
 
     public void HurtByRatio(float ratio)
     {
         this.curr_hp -= this.curr_hp * ratio;
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_Enemy4);
+
         if (curr_hp <= 0)       // 敌人死亡，返回对象池
         {
             this.gameObject.SetActive(false);
             EnvironmentManager.instance.enemysList.Remove(this);
             EnvironmentManager.instance.EnemyKillNum++;
+            SoundManager.Instance.PlaySound(SoundDefine.Sound_Enemy2);
+
         }
     }
 

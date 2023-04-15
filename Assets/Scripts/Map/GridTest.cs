@@ -11,6 +11,10 @@ public class GridTest : MonoBehaviour
     public GameObject Obstacle2;
     public GameObject Obstacle3;
     public GameObject ResPoint;
+    public GameObject Wastland;
+    public GameObject snowyPlain;
+    public GameObject Mountain;
+
     [Header("敌人种类")] public GameObject[] spawnObjects;
     public int spawnCount;
     public AstarPath Path;
@@ -28,7 +32,7 @@ public class GridTest : MonoBehaviour
         {
             Destroy(transform.GetChild(i).gameObject);
         }
-        grid.ShowGridInfo(Obstacle1, Obstacle2, Obstacle3, ResPoint);
+        grid.ShowGridInfo(Obstacle1, Obstacle2, Obstacle3, ResPoint, Wastland, snowyPlain, Mountain);
         Path.Scan();
         SpawnEnemy();
     }

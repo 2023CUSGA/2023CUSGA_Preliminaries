@@ -23,6 +23,8 @@ public class UIGamePlay : MonoBehaviour
         EnvironmentManager.instance.addGold = AddGold;
         TrainManager.GetInstance().onFailedAction += GameLose;
         goldNum2.text = ResourceDataContainer.GetResourceQuantity(ResourseNames.金币).ToString();
+        SoundManager.Instance.PlayMusic(SoundDefine.Music_MainScene);
+
     }
 
     void AddGold(int num)
@@ -35,6 +37,8 @@ public class UIGamePlay : MonoBehaviour
 
     void GameWin()
     {
+        SoundManager.Instance.PlayMusic(SoundDefine.Music_Victory);
+
         PlayerPrefs.SetInt("levelNum", PlayerPrefs.GetInt("levelNum") + 1);
         killNum.text = EnvironmentManager.instance.EnemyKillNum.ToString();
         goldNum2.text = ResourceDataContainer.GetResourceQuantity(ResourseNames.金币).ToString();
@@ -43,6 +47,8 @@ public class UIGamePlay : MonoBehaviour
     }
     void GameLose()
     {
+        SoundManager.Instance.PlayMusic(SoundDefine.Music_Failure);
+
         TrainManager.GetInstance().onFailedAction -= GameLose;
         losePanel.SetActive(true);
         Time.timeScale = 0;
@@ -51,12 +57,16 @@ public class UIGamePlay : MonoBehaviour
     public void ReStartThisLevel()
     {
         Time.timeScale = 1;
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_UIClick);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void BackToCampsite()
     {
         Time.timeScale = 1;
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_UIClick);
+
         SceneManager.LoadScene("Campsite");
     }
 

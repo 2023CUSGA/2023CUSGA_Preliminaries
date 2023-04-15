@@ -10,6 +10,7 @@ public class UICampsite : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.PlayMusic(SoundDefine.Music_CampsiteScene);
         goldNum.text = ResourceDataContainer.GetResourceQuantity(ResourseNames.金币).ToString();
     }
 
@@ -18,7 +19,10 @@ public class UICampsite : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
-
+    public void ButtonClickSound()
+    {
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_UIClick);
+    }
 
 
 
