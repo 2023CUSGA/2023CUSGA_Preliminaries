@@ -164,7 +164,7 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0}
   normalImage: {fileID: -1318721856, guid: d6c1c2349fb4cd84f91dc6c3f9ecc6cb, type: 3}
   brokeImage: {fileID: -568043190, guid: 502d19f5d1a2be24797d4d7cc733a836, type: 3}
-  dizzyImage: {fileID: 0}
+  dizzyImage: {fileID: 1173181144, guid: 9dfc7124f46260945858972bbbf6762a, type: 3}
 --- !u!114 &8721039594551465421
 MonoBehaviour:
   m_ObjectHideFlags: 0
