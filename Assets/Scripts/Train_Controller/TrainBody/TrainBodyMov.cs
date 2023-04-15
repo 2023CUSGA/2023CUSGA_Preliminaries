@@ -15,6 +15,9 @@ public class TrainBodyMov : MonoBehaviour
     private GameObject preNode;  //前一节车厢的物体
     private Route route;  //转向信息
     private float distance;  //与前一节车厢的距离
+    [SerializeField] private Sprite normalImage; //原来的贴图
+    [SerializeField]private Sprite brokeImage;  //损坏的贴图
+    [SerializeField]private Sprite dizzyImage; //晕眩的贴图
 
     public event Action onRouteSetted;  //发送路径信息时的事件
 
@@ -136,5 +139,20 @@ public class TrainBodyMov : MonoBehaviour
     public Route GetRoute()  //route Get方法
     {
         return this.route;
+    }
+
+    public void SetNormalImage() //设置为原来的贴图
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = normalImage;
+    }
+
+    public void SetBrokeImage() //设置为原来的贴图
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = brokeImage;
+    }
+
+    public void SetDizzyImage() //设置为原来的贴图
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = dizzyImage;
     }
 }

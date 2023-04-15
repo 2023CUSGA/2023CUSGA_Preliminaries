@@ -263,6 +263,7 @@ public class TrainheadMov : MonoBehaviour
         isMoving = false;
         trainSpeed = 0;
         isDizzy = true;
+        TrainManager.GetInstance().SetTrainBodyImage(1);
         StartCoroutine(DizzyFor3Second());
     }
 
@@ -276,9 +277,11 @@ public class TrainheadMov : MonoBehaviour
             {
                 isDizzy = false;
                 canMove = true;
+                TrainManager.GetInstance().SetTrainBodyImage(0);
                 yield break;
             }
             yield return new WaitForSeconds(1);
         }
     }
+
 }

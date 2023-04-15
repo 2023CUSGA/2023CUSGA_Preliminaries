@@ -27,12 +27,8 @@ public class TrainManager : MonoBehaviour
         instance = this;  //单例模式
         upgradeCard = GameObject.FindGameObjectWithTag("UI_UpgradeCards");
         upgradeCard.SetActive(false);
+        trainBodyNum = trainLength - 1;
         initTrain();
-    }
-
-    private void Update()
-    {
-        OnFail();
     }
 
     public static TrainManager GetInstance()  //单例模式
@@ -65,9 +61,10 @@ public class TrainManager : MonoBehaviour
         return isInMaxPower;
     }
 
-    public void DecreaseTrainBodyNum(int i=1)
+    public void DecreaseTrainBodyNum(int i=1)  //车厢数量减少函数
     {
         trainBodyNum -= 1;
+        OnFail();
     }
 
     void initTrain()  //初始化火车
@@ -79,9 +76,9 @@ public class TrainManager : MonoBehaviour
         for(int i=0;i<trainLength-1;i++)  //初始化火车身
         {
             if (i == 0)
-                nodeDistance -= 0.60f;
+                nodeDistance -= 0.83f;
             else
-                nodeDistance -= 0.60f;
+                nodeDistance -= 0.70f;
             GameObject temp = Instantiate(trainbody, new Vector3(13.29f, nodeDistance, 0), Quaternion.identity);
             temp.name = "train_body" + i.ToString();
             temp.GetComponent<TrainBody>().SetId(i);
@@ -191,6 +188,33 @@ public class TrainManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void SetTrainBodyImage(int type)  //设置火车车厢贴图 0：正常 1：晕眩 2：损坏
+    {
+        switch (type) 
+        {
+            case 0:
+                for(int i=0;i<trainLength-1;i++)
+                {
+                    GameObject.Find("train_body" + i).GetComponent<TrainBodyMov>().SetNormalImage();
+                }
+                break;
+            case 1:
+                for (int i = 0; i < trainLength - 1; i++)
+                {
+                    GameObject.Find("train_body" + i).GetComponent<TrainBodyMov>().SetDizzyImage();
+                }
+                break;
+            case 2:
+                for (int i = 0; i < trainLength - 1; i++)
+                {
+                    GameObject.Find("train_body" + i).GetComponent<TrainBodyMov>().SetBrokeImage();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     public int GetTrainHeadType()  //trainHeadType Get方法
     {
         return this.trainHeadType;
@@ -218,10 +242,11 @@ public class TrainManager : MonoBehaviour
         isInMaxPower = false;
     }
 
-    public void OnFail()
+    public void OnFail()  //失败判断
     {
         if(trainBodyNum <=0)
         {
+            Debug.Log("FAIL");
             onFailedAction();
         }
     }
