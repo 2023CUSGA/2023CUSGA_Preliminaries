@@ -146,6 +146,7 @@ public class TrainManager : MonoBehaviour
 
     private void UpgradeTrainHead()  //火车头升级
     {
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_Train1);
         upgradeCard.SetActive(true);
         Time.timeScale = 0;
     }  
@@ -160,6 +161,7 @@ public class TrainManager : MonoBehaviour
 
         if (0 <= i && i <= 3)
         {
+            SoundManager.Instance.PlaySound(SoundDefine.Sound_UIClick);
             this.trainHeadType = i;
             if(i==0)
             {

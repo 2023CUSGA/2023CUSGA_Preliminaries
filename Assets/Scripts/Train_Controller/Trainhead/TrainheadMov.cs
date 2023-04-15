@@ -46,6 +46,7 @@ public class TrainheadMov : MonoBehaviour
         {
             if (canMove && !isDizzy)  //如果可以运动
             {
+                SoundManager.Instance.PlaySound(SoundDefine.Sound_Train2);
                 if (isMoving == true)
                     isMoving = false;
                 else
@@ -65,6 +66,7 @@ public class TrainheadMov : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, wayPoint.transform.position, trainSpeed * Time.fixedDeltaTime);
         if (isMoving)  //如果处于启动状态
         {
+            SoundManager.Instance.PlayMusic(SoundDefine.Sound_Train5);
             //加速启动部分
             if (trainSpeed != moveSpeed)
             {
@@ -186,6 +188,7 @@ public class TrainheadMov : MonoBehaviour
         }
         if(collision.gameObject.tag=="Enemy")  //撞击敌人
         {
+            SoundManager.Instance.PlaySound(SoundDefine.Sound_Train3); //撞击音效
             TrainManager.GetInstance().OnCrashEnermy();
             int i = TrainManager.GetInstance().GetTrainHeadType();
             EnemyBase enemyBaseTemp = collision.gameObject.GetComponent<EnemyBase>();
@@ -264,6 +267,7 @@ public class TrainheadMov : MonoBehaviour
         trainSpeed = 0;
         isDizzy = true;
         TrainManager.GetInstance().SetTrainBodyImage(1);
+        SoundManager.Instance.PlaySound(SoundDefine.Sound_Train3); //撞击音效
         StartCoroutine(DizzyFor3Second());
     }
 
