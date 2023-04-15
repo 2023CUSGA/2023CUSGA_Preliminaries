@@ -49,6 +49,10 @@ public class EnemyBase : EntityBase
         seeker = GetComponent<Seeker>();
         seeker.pathCallback = OnPathComplete;
 
+        if (EnvironmentManager.instance.enemysList.Contains(this))
+        {
+            return;
+        }
         EnvironmentManager.instance.enemysList.Add(this);
     }
 

@@ -35,6 +35,7 @@ public class EnvironmentManager : MonoBehaviour
         get { return enemyKillNum; }
         set
         {
+            enemyKillNum = value;
             int rand = UnityEngine.Random.Range(5, 9);
             ResourceDataContainer.IncreaseResourceQuantity(ResourseNames.金币, rand);
 
@@ -205,7 +206,7 @@ public class EnvironmentManager : MonoBehaviour
 
     void CheckGameOver()
     {
-        if (enemysList.Count == 0)
+        if (enemysList.Count < 10)
         {
             EnemyKillNum = 0;
             gameWin?.Invoke();

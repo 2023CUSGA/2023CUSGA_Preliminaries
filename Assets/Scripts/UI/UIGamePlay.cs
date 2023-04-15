@@ -43,9 +43,9 @@ public class UIGamePlay : MonoBehaviour
 
     void AddGold(int num)
     {
-        goldNum.text = ResourceDataContainer.GetResourceQuantity(ResourseNames.金币).ToString();
+        goldNum2.text = ResourceDataContainer.GetResourceQuantity(ResourseNames.金币).ToString();
         addGoldNum.text = " +" + num;
-        addGoldNum.DOFade(1f, 1f).onComplete = () => addGoldNum.DOFade(0, 2f);
+        //addGoldNum.DOFade(1f, 1f).onComplete = () => addGoldNum.DOFade(0, 2f);
     }
 
 
@@ -54,9 +54,9 @@ public class UIGamePlay : MonoBehaviour
         SoundManager.Instance.PlayMusic(SoundDefine.Music_Victory);
 
         PlayerPrefs.SetInt("levelNum", PlayerPrefs.GetInt("levelNum") + 1);
-        killNum.text = EnvironmentManager.instance.EnemyKillNum.ToString();
-        goldNum2.text = ResourceDataContainer.GetResourceQuantity(ResourseNames.金币).ToString();
         winPanel.SetActive(true);
+        killNum.text = EnvironmentManager.instance.EnemyKillNum.ToString();
+        goldNum.text = ResourceDataContainer.GetResourceQuantity(ResourseNames.金币).ToString();
         Time.timeScale = 0;
     }
     void GameLose()

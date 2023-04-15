@@ -1448,11 +1448,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pools:
   - prefab: {fileID: 8060850234600911818, guid: 7c784bd54afb8ac4cb87f2c4234bb180, type: 3}
-    size: 10
+    size: 5
   - prefab: {fileID: 275065721367068465, guid: 390cf97542d7b7848bac5a06d0b9cbf3, type: 3}
-    size: 10
+    size: 5
   - prefab: {fileID: 7975251878980787965, guid: 8ca7e06e0715fdb469c9d5e4a129122f, type: 3}
-    size: 10
+    size: 5
   - prefab: {fileID: 7053126470071665638, guid: a8f8745a40331cd448346a50e48ea96f, type: 3}
     size: 10
   - prefab: {fileID: 3923704338335077871, guid: 89e2025da9bd75043a0f12cd60f965a7, type: 3}
@@ -2649,7 +2649,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 999
+  m_Text: 0
 --- !u!222 &1221138258
 CanvasRenderer:
   m_ObjectHideFlags: 0
