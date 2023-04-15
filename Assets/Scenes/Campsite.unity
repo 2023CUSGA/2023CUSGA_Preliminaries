@@ -2134,6 +2134,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 133513773}
     m_Modifications:
+    - target: {fileID: 3386326440885612180, guid: 8e6f754e2d6362c4aa4c1c0928dab903, type: 3}
+      propertyPath: avatar1
+      value: 
+      objectReference: {fileID: 21300000, guid: 7c7ea656accf8c649bc91e6e21601daf, type: 3}
+    - target: {fileID: 3386326440885612180, guid: 8e6f754e2d6362c4aa4c1c0928dab903, type: 3}
+      propertyPath: avatar3
+      value: 
+      objectReference: {fileID: 21300000, guid: 13e0750ceaacfb2439a2c681f75ac9ba, type: 3}
     - target: {fileID: 3386326440885612185, guid: 8e6f754e2d6362c4aa4c1c0928dab903, type: 3}
       propertyPath: m_Name
       value: TentPanel
